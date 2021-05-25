@@ -182,8 +182,115 @@ void menu_serwisant() {
     }
 }
 
+class Model {
+    string marka;
+    string wersja;
+    int moc_silnika;
+    string skrzynia_biegow;
+    string paliwo;
+    float sr_spalanie;
+    int ilosc_drzwi;
+    int ilosc_miejsc;
+    float poj_bagaznika;
+    bool klimatyzacja;
+    float koszt_godzina;
+
+public:
+    Model() {
+        marka = "-";
+        wersja = "-";
+        moc_silnika = 0;
+        skrzynia_biegow = "-";
+        paliwo = "-";
+        sr_spalanie = 0;
+        ilosc_drzwi = 0;
+        ilosc_miejsc = 0;
+        poj_bagaznika = 0;
+        klimatyzacja = 0;
+        koszt_godzina = 0;
+    }
+    Model(string marka, string wersja, int moc_silnika, string skrzynia_biegow,
+        string paliwo, float sr_spalanie, int ilosc_drzwi, int ilosc_miejsc,
+        float poj_bagaznika, bool klimatyzacja, float koszt_godzina) {
+
+        this->marka = marka;
+        this->wersja = wersja;
+        this->moc_silnika = moc_silnika;
+        this->skrzynia_biegow = skrzynia_biegow;
+        this->paliwo = paliwo;
+        this->sr_spalanie = sr_spalanie;
+        this->ilosc_drzwi = ilosc_drzwi;
+        this->ilosc_miejsc = ilosc_miejsc;
+        this->poj_bagaznika = poj_bagaznika;
+        this->klimatyzacja = klimatyzacja;
+        this->koszt_godzina = koszt_godzina;
+    }
+};
+
+class Samochod {
+    Model model;
+    string nr_rejestracyjny;
+    string kolor;
+    int przebieg;
+    int rocznik;
+public: 
+    static int licznik;
+
+public:
+    Samochod(Model model, string nr_rejestracyjny, string kolor, int przebieg, int rocznik) {
+        this->model = model;
+        this->nr_rejestracyjny = nr_rejestracyjny;
+        this->kolor = kolor;
+        this->przebieg = przebieg;
+        this->rocznik = rocznik;
+        licznik++;
+    }
+    ~Samochod() {
+        licznik--;
+    }
+
+    void dodaj() {
+        cout << "dodaj" << endl;
+    }
+};
+
+int Samochod::licznik = 0;
+
+struct date {
+    int rok;
+    int miesiac;
+    int dzien;
+    int godzina;
+};
+
+class Wypozyczenie {
+    date wyp_od;
+    date wyp_do;
+    int przebieg_wyp;
+    int przebieg_zwr;
+    bool czy_zwrocony;
+    int nr_zamowienia;
+};
+
+class Osoba {
+    string imie;
+    string nazwisko;
+    int pesel;
+    string nr_tel;
+};
+
+class Pracownik {
+    string stanowisko;
+};
+
+class Klient {
+
+};
 
 int main()
 {
-    menu();
+    //menu();
+    Model BMW_serii_1("BMW", "118i M Sport", 140, "automatyczna", "benzyna", 5.9, 5, 5, 380, true, 230);
+    Samochod samochod1(BMW_serii_1, "KNS 83674", "czarny", 52350, 2019);
+    //bmw.dodaj();
 }
