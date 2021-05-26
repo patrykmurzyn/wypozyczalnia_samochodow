@@ -1,4 +1,7 @@
 ﻿#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 using namespace std;
 
 void menu_kierownik();
@@ -224,8 +227,88 @@ public:
         this->poj_bagaznika = poj_bagaznika;
         this->klimatyzacja = klimatyzacja;
         this->koszt_godzina = koszt_godzina;
+
+        Save("SaveModel");
+    }
+    void Save(const string save_T) {
+        ofstream file;
+        file.open(save_T, ios::app);
+
+        if (file.is_open()) {
+            file << marka << endl << wersja << endl << moc_silnika << endl <<
+                skrzynia_biegow << endl << paliwo << endl << sr_spalanie << endl <<
+                ilosc_drzwi << endl << ilosc_miejsc << endl << poj_bagaznika << endl <<
+                klimatyzacja << endl << koszt_godzina << endl;
+
+            file.close();
+        }
+    }
+    void ReadAll(const string save_T) {
+        fstream file;
+        file.open(save_T, ios::in);
+
+        if (file.is_open()) {
+            string line;
+            while (getline(file, line)) {
+                cout << line << endl;
+            }
+        file.close();
+        }
+    }
+    void ReadVersion(const string save_T) {
+        fstream file;
+        file.open(save_T, ios::in);
+
+        if (file.is_open()) {
+            string line;
+            int turn = 0;
+            int index = 1;
+            while (getline(file, line)) {
+                if (turn == index) {
+                    cout << line << endl;
+                    index += 11;
+                }
+                turn++;
+            }
+            file.close();
+        }
+    }
+
+    void RemoveModel(const string save_T, int index) {
+        fstream file_i;
+        file_i.open(save_T, ios::in);
+
+        string line;
+        vector<string> vec;
+
+        while (getline(file_i, line)) {
+            vec.push_back(line);
+        }
+        file_i.close();
+
+        fstream file_o;
+        file_o.open(save_T, ios::out);
+
+        int start = 1 + (index - 1) * 10;
+
+        for (int i = 0; i < vec.size(); i++) {
+            if (i < start || i > start + 10) {
+                file_o << vec[i] << endl;
+            }
+        }
+
+        file_o.close();
+        
     }
 };
+
+void clearFile(const string save_T) {
+    ofstream file;
+    file.open(save_T, ios::out);
+
+    file.close();
+    
+}
 
 class Samochod {
     Model model;
@@ -289,8 +372,13 @@ class Klient {
 
 int main()
 {
+    clearFile("SaveModel");
     //menu();
     Model BMW_serii_1("BMW", "118i M Sport", 140, "automatyczna", "benzyna", 5.9, 5, 5, 380, true, 230);
+    Model Yaris("Toyota", "Yaris", 125, "manualna", "benzyna", 8.5, 5, 5, 255, true, 120);
+    Model Vivaro("Opel", "Vivaro", 144, "automatyczna", "Diesel", 13.2, 5, 9, 1400, true, 490);
+    BMW_serii_1.RemoveModel("SaveModel", 3);
+    BMW_serii_1.ReadVersion("SaveModel");
     Samochod samochod1(BMW_serii_1, "KNS 83674", "czarny", 52350, 2019);
     //bmw.dodaj();
 }
