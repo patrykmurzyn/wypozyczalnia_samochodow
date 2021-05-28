@@ -142,12 +142,13 @@ public:
 vector<Wypozyczenie> wypozyczenie;
 
 class Osoba {
+protected:
     string imie;
     string nazwisko;
-    int pesel;
+    string pesel;
     string nr_tel;
 public:
-    Osoba(string imie = "", string nazwisko = "", int pesel = 0,
+    Osoba(string imie = "", string nazwisko = "", string pesel = "",
         string nr_tel = "") {
 
         this->imie = imie;
@@ -160,7 +161,7 @@ public:
 
 class Klient :Osoba {
 public:
-    Klient(string imie = "", string nazwisko = "", int pesel = 0,
+    Klient(string imie = "", string nazwisko = "", string pesel = "",
         string nr_tel = "") : Osoba(imie, nazwisko, pesel, nr_tel) {}
     
     void dodaj() {
@@ -172,12 +173,16 @@ public:
     void znajdz(string telefon) {
 
     }
+    friend void CreateKlientObj();
+    friend void ReadAllKlient();
 };
+
+vector<Klient> klient;
 
 class Pracownik :Osoba {
     string stanowisko;
 public:
-    Pracownik(string imie = "", string nazwisko = "", int pesel = 0,
+    Pracownik(string imie = "", string nazwisko = "", string pesel = "",
         string nr_tel = "", string stanowisko = "") 
         : Osoba(imie, nazwisko, pesel, nr_tel), stanowisko(stanowisko) {}
     
@@ -187,7 +192,58 @@ public:
     void usun() {
 
     }
+    friend void CreatePracownikObj();
+    friend void ReadAllPracownik();
 };
+
+vector<Pracownik> pracownik;
+
+void CreatePracownikObj() {
+    Pracownik temp;
+
+    fstream file;
+    file.open("SavePracownik", ios::in);
+
+    if (file.is_open()) {
+        while (file >> temp.imie >> temp.nazwisko >> temp.pesel >> temp.nr_tel >> temp.stanowisko) {
+            pracownik.push_back(temp);
+        }
+        file.close();
+    }
+}
+
+void ReadAllPracownik() {
+    for (int i = 0; i < pracownik.size(); i++) {
+        //cout << "Imie: " << pracownik[i].imie << endl;
+        cout << "Nazwisko: " << pracownik[i].nazwisko << endl;
+        //cout << "Pesel: " << pracownik[i].pesel << endl;
+        //cout << "Telefon: " << pracownik[i].nr_tel << endl;
+        //cout << "Stanowisko: " << pracownik[i].stanowisko << endl;
+    }
+}
+
+void CreateKlientObj() {
+    Klient temp;
+
+    fstream file;
+    file.open("SaveKlient", ios::in);
+
+    if (file.is_open()) {
+        while (file >> temp.imie >> temp.nazwisko >> temp.pesel >> temp.nr_tel) {
+            klient.push_back(temp);
+        }
+        file.close();
+    }
+}
+
+void ReadAllKlient() {
+    for (int i = 0; i < klient.size(); i++) {
+        //cout << "Imie: " << klient[i].imie << endl;
+        cout << "Nazwisko: " << klient[i].nazwisko << endl;
+        //cout << "Pesel: " << klient[i].pesel << endl;
+        //cout << "Telefon: " << klient[i].nr_tel << endl;
+    }
+}
 
 void CreateWypozyczenieObj() {
     Wypozyczenie temp;
@@ -196,7 +252,6 @@ void CreateWypozyczenieObj() {
     file.open("SaveWypozyczenie", ios::in);
 
     if (file.is_open()) {
-        string nazwa;
         while (file >> temp.wyp_od.rok >> temp.wyp_od.miesiac >> 
             temp.wyp_od.dzien >> temp.wyp_od.godzina >> 
             temp.wyp_od.minuty >> temp.wyp_do.rok >> temp.wyp_do.miesiac >>
@@ -378,8 +433,42 @@ int main()
 
     CreateWypozyczenieObj();
     ReadAllWypozyczenia();
+
+    cout << "##########################" << endl;
+
+    CreateKlientObj();
+    ReadAllKlient();
+
+    cout << "##########################" << endl;
+
+    CreatePracownikObj();
+    ReadAllPracownik();
 }
 
+//SaveModel
 //BMW 118i 140 automatyczna benzyna 5.9 5 5 380 1 230
 //Toyota Yaris 125 manualna benzyna 8.5 5 5 255 1 120
 //Opel Vivaro 144 automatyczna Diesel 13.2 5 9 1400 1 490
+
+//SaveSamochod
+//118i KRSPEED czerwony 15000 2020
+//Yaris KR93483 czarny 22000  2020
+//Vivaro KR84934 bialy 35000 2019
+
+//SaveWypozyczenie
+//2021 05 26 13 30 2021 05 28 15 00 18000 18040 0
+//2021 05 30 13 30 2021 05 31 16 00 18000 18040 1
+//2021 06 02 12 00 2021 06 05 19 00 18000 18040 2
+//2021 06 03 09 30 0 0 0 0 0 18000 0 3
+//2021 06 04 17 15 0 0 0 0 0 18000 0 4
+
+//SaveKlient
+//Jan Nowak 97061304653 495483940
+//Adam Kowalski 92012246125 945563649
+//Klaudia Wisniewska 601101324507 639823695
+//Artur Zielinski 72030892834 926394036
+
+//SavePracownicy
+//Szymon Kowalczyk 96101008793 937493023 recepcjonista
+//Kamil Lewandowski 94032303943 935643294 recepcjonista
+//Grzegorz Kaminski 70120393234 372935394 serwisant
