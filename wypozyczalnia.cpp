@@ -66,6 +66,7 @@ public:
 vector<Model> model;
 vector<Samochod> samochod;
 
+
 class Samochod {
     Model SamModel;
     string nr_rejestracyjny;
@@ -109,6 +110,84 @@ public:
     friend void ReadAllSamochod();
     friend void RemoveObjModel(int);
 };
+
+struct Date {
+    short rok;
+    short miesiac;
+    short dzien;
+    short godzina;
+    short minuty;
+};
+
+class Wypozyczenie {
+    Date wyp_od;
+    Date wyp_do;
+    int wyp_przebieg;
+    int zwr_przebieg;
+    bool czy_zwrocono;
+    int nr_zamowienia;
+public:
+    Wypozyczenie(Date wyp_od = Date(), Date wyp_do = Date(), int wyp_przebieg = 0,
+        int zwr_przebieg = 0, bool czy_zwrocono = 0, int nr_zamowienia = 0) {
+        this->wyp_od = wyp_od;
+        this->wyp_do = wyp_do;
+        this->wyp_przebieg = wyp_przebieg;
+        this->zwr_przebieg = zwr_przebieg;
+        this->czy_zwrocono = czy_zwrocono;
+        this->nr_zamowienia = nr_zamowienia;
+    }
+};
+
+vector<Wypozyczenie> wypozyczenie;
+
+class Osoba {
+    string imie;
+    string nazwisko;
+    int pesel;
+    string nr_tel;
+public:
+    Osoba(string imie = "", string nazwisko = "", int pesel = 0,
+        string nr_tel = "") {
+
+        this->imie = imie;
+        this->nazwisko = nazwisko;
+        this->pesel = pesel;
+        this->nr_tel = nr_tel;
+    }
+    virtual void dodaj() = 0;
+};
+
+class Klient :Osoba {
+public:
+    Klient(string imie = "", string nazwisko = "", int pesel = 0,
+        string nr_tel = "") : Osoba(imie, nazwisko, pesel, nr_tel) {}
+    
+    void dodaj() {
+
+    }
+    void znajdz(int pesel) {
+
+    }
+    void znajdz(string telefon) {
+
+    }
+};
+class Pracownik :Osoba {
+    string stanowisko;
+public:
+    Pracownik(string imie = "", string nazwisko = "", int pesel = 0,
+        string nr_tel = "", string stanowisko = "") 
+        : Osoba(imie, nazwisko, pesel, nr_tel), stanowisko(stanowisko) {}
+    
+    void dodaj() {
+
+    }
+    void usun() {
+
+    }
+};
+
+
 
 void CreateSamochodObj() {
     Samochod temp;
@@ -238,6 +317,8 @@ void ReadAllModel() {
         //cout << "Koszt za godzine: " << model[i].koszt_godzina << endl;
     }
 }
+
+
 
 int main()
 {
