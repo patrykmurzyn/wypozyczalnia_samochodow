@@ -136,6 +136,8 @@ public:
         this->czy_zwrocono = czy_zwrocono;
         this->nr_zamowienia = nr_zamowienia;
     }
+
+    friend void CreateWypozyczenieObj();
 };
 
 vector<Wypozyczenie> wypozyczenie;
@@ -172,6 +174,7 @@ public:
 
     }
 };
+
 class Pracownik :Osoba {
     string stanowisko;
 public:
@@ -187,7 +190,26 @@ public:
     }
 };
 
+void CreateWypozyczenieObj() {
+    Wypozyczenie temp;
 
+    fstream file;
+    file.open("SaveWypozyczenie", ios::in);
+
+    if (file.is_open()) {
+        string nazwa;
+        while (file >> temp.wyp_od.rok >> temp.wyp_od.miesiac >> 
+            temp.wyp_od.dzien >> temp.wyp_od.godzina >> 
+            temp.wyp_od.minuty >> temp.wyp_do.rok >> temp.wyp_do.miesiac >>
+            temp.wyp_do.dzien >> temp.wyp_do.godzina >>
+            temp.wyp_do.minuty >> temp.wyp_przebieg >> temp.zwr_przebieg >>
+            temp.czy_zwrocono >> temp.nr_zamowienia) {
+
+            wypozyczenie.push_back(temp);
+        }
+        file.close();
+    }
+}
 
 void CreateSamochodObj() {
     Samochod temp;
