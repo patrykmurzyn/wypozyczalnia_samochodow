@@ -124,20 +124,19 @@ class Wypozyczenie {
     Date wyp_do;
     int wyp_przebieg;
     int zwr_przebieg;
-    bool czy_zwrocono;
     int nr_zamowienia;
 public:
     Wypozyczenie(Date wyp_od = Date(), Date wyp_do = Date(), int wyp_przebieg = 0,
-        int zwr_przebieg = 0, bool czy_zwrocono = 0, int nr_zamowienia = 0) {
+        int zwr_przebieg = 0, int nr_zamowienia = 0) {
         this->wyp_od = wyp_od;
         this->wyp_do = wyp_do;
         this->wyp_przebieg = wyp_przebieg;
         this->zwr_przebieg = zwr_przebieg;
-        this->czy_zwrocono = czy_zwrocono;
         this->nr_zamowienia = nr_zamowienia;
     }
 
     friend void CreateWypozyczenieObj();
+    friend void ReadAllWypozyczenia();
 };
 
 vector<Wypozyczenie> wypozyczenie;
@@ -203,11 +202,34 @@ void CreateWypozyczenieObj() {
             temp.wyp_od.minuty >> temp.wyp_do.rok >> temp.wyp_do.miesiac >>
             temp.wyp_do.dzien >> temp.wyp_do.godzina >>
             temp.wyp_do.minuty >> temp.wyp_przebieg >> temp.zwr_przebieg >>
-            temp.czy_zwrocono >> temp.nr_zamowienia) {
+            temp.nr_zamowienia) {
 
             wypozyczenie.push_back(temp);
         }
         file.close();
+    }
+}
+
+void ReadAllWypozyczenia() {
+    for (int i = 0; i < wypozyczenie.size(); i++) {
+        //cout << "Data wypozyczenia: " << 
+            //wypozyczenie[i].wyp_od.rok << " " <<
+            //wypozyczenie[i].wyp_od.miesiac << " " <<
+            //wypozyczenie[i].wyp_od.dzien << " " << 
+            //wypozyczenie[i].wyp_od.godzina << ":" <<
+            //wypozyczenie[i].wyp_od.minuty << endl;
+        //cout << "Data Oddania: " <<
+            //wypozyczenie[i].wyp_do.rok << " " <<
+            //wypozyczenie[i].wyp_do.miesiac << " " <<
+            //wypozyczenie[i].wyp_do.dzien << " " <<
+            //wypozyczenie[i].wyp_do.godzina << ":" <<
+            //wypozyczenie[i].wyp_do.minuty << endl;
+        //cout << "Wypozyczony przebieg: " <<
+            //wypozyczenie[i].wyp_przebieg << endl;
+        //cout << "Zwrocony przebieg: " <<
+            //wypozyczenie[i].zwr_przebieg << endl;
+        cout << "Numer zamowienia: " <<
+            wypozyczenie[i].nr_zamowienia << endl;
     }
 }
 
@@ -345,14 +367,17 @@ void ReadAllModel() {
 int main()
 {
     CreateModelObj();
-    
     ReadAllModel();
+
     cout << "##########################" << endl;
 
     CreateSamochodObj();
     ReadAllSamochod();
 
-    RemoveObjModel(1);
+    cout << "##########################" << endl;
+
+    CreateWypozyczenieObj();
+    ReadAllWypozyczenia();
 }
 
 //BMW 118i 140 automatyczna benzyna 5.9 5 5 380 1 230
