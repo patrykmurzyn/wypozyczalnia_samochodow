@@ -58,9 +58,12 @@ public:
 
     friend void CreateModelObj();
     friend void ReadAllModel();
+    friend void AddModel(string, string, int, string, string, float ,
+        int, int, float, bool, float);
     friend void RemoveObjModel(int);
     friend class Samochod;
     friend void ReadAllSamochod();
+    friend void AddSamochod(Model, string, string, int, int);
 };
 
 vector<Model> model;
@@ -86,18 +89,6 @@ public:
         this->rocznik = rocznik;
     }
 
-    void Save() {
-        ofstream file;
-        file.open("SaveSamochod", ios::app);
-
-        if (file.is_open()) {
-            file << SamModel.wersja << " " << nr_rejestracyjny << " " 
-                << kolor << " " << przebieg << " " << rocznik;
-
-            file.close();
-        }
-    }
-
     static Model GetModel(string nazwa) {
         for (int i = 0; i < model.size(); i++) {
             if (model[i].wersja == nazwa) {
@@ -106,9 +97,12 @@ public:
         }
     }
 
+
+
     friend void CreateSamochodObj();
     friend void ReadAllSamochod();
     friend void RemoveObjModel(int);
+    friend void AddSamochod(Model, string, string, int, int);
 };
 
 struct Date {
@@ -316,6 +310,21 @@ void ReadAllSamochod() {
     }
 }
 
+void AddSamochod(Model m, string nr_rej, string kolor, int przebieg, int rocznik) {
+    ofstream file;
+    file.open("SaveSamochod", ios::app);
+
+    if (file.is_open()) {
+        file << m.wersja << " " << nr_rej << " "
+            << kolor << " " << przebieg << " " << rocznik;
+
+        file.close();
+    }
+
+    samochod.clear();
+    CreateSamochodObj();
+}
+
 void RemoveObjSamochod(int index) {
     fstream file_i;
     file_i.open("SaveSamochod", ios::in);
@@ -360,6 +369,28 @@ void CreateModelObj() {
         file.close();
     }
 
+}
+
+void AddModel(string marka, string wersja, int moc_silnika,
+    string skrzynia_biegow, string paliwo, float sr_spalanie,
+    int ilosc_drzwi, int ilosc_miejsc, float poj_bagaznika,
+    bool klimatyzacja, float koszt_godzina) {
+
+    ofstream file;
+    file.open("SaveModel", ios::app);
+
+    if (file.is_open()) {
+        file << endl << marka << " " << wersja << " "
+            << moc_silnika << " " << skrzynia_biegow << " " 
+            << paliwo << " " << sr_spalanie << " " << ilosc_drzwi 
+            << " " << ilosc_miejsc << " " << poj_bagaznika << " " 
+            << klimatyzacja << " " <<  koszt_godzina;
+
+        file.close();
+    }
+
+    model.clear();
+    CreateModelObj();
 }
 
 void RemoveObjModel(int index) {
@@ -426,49 +457,6 @@ int main()
 
     cout << "##########################" << endl;
 
-    CreateSamochodObj();
-    ReadAllSamochod();
-
-    cout << "##########################" << endl;
-
-    CreateWypozyczenieObj();
-    ReadAllWypozyczenia();
-
-    cout << "##########################" << endl;
-
-    CreateKlientObj();
-    ReadAllKlient();
-
-    cout << "##########################" << endl;
-
-    CreatePracownikObj();
-    ReadAllPracownik();
+    AddModel("test", "test", 2, "test", "test", 2.2, 2,2,2,1,2.2);
+    ReadAllModel();
 }
-
-//SaveModel
-//BMW 118i 140 automatyczna benzyna 5.9 5 5 380 1 230
-//Toyota Yaris 125 manualna benzyna 8.5 5 5 255 1 120
-//Opel Vivaro 144 automatyczna Diesel 13.2 5 9 1400 1 490
-
-//SaveSamochod
-//118i KRSPEED czerwony 15000 2020
-//Yaris KR93483 czarny 22000  2020
-//Vivaro KR84934 bialy 35000 2019
-
-//SaveWypozyczenie
-//2021 05 26 13 30 2021 05 28 15 00 18000 18040 0
-//2021 05 30 13 30 2021 05 31 16 00 18000 18040 1
-//2021 06 02 12 00 2021 06 05 19 00 18000 18040 2
-//2021 06 03 09 30 0 0 0 0 0 18000 0 3
-//2021 06 04 17 15 0 0 0 0 0 18000 0 4
-
-//SaveKlient
-//Jan Nowak 97061304653 495483940
-//Adam Kowalski 92012246125 945563649
-//Klaudia Wisniewska 601101324507 639823695
-//Artur Zielinski 72030892834 926394036
-
-//SavePracownicy
-//Szymon Kowalczyk 96101008793 937493023 recepcjonista
-//Kamil Lewandowski 94032303943 935643294 recepcjonista
-//Grzegorz Kaminski 70120393234 372935394 serwisant
