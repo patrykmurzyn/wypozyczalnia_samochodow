@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <conio.h>
 
 using namespace std;
 
@@ -60,11 +61,11 @@ public:
     friend void ReadAllModel();
     friend void AddModel(string, string, int, string, string, float ,
         int, int, float, bool, float);
-    friend void RemoveObjModel(int);
     friend class Samochod;
     friend void ReadAllSamochod();
     friend void AddSamochod(Model, string, string, int, int);
     friend void ReadAllModelVersion();
+    friend void RemoveObjModel(int);
 };
 
 vector<Model> model;
@@ -245,7 +246,7 @@ void AddKlient(string imie, string nazwisko, string pesel, string nr_tel) {
     file.open("SaveKlient", ios::app);
 
     if (file.is_open()) {
-        file << endl << imie << " " << nazwisko << " " << pesel << " " << nr_tel;
+        file << imie << " " << nazwisko << " " << pesel << " " << nr_tel << endl;
 
         file.close();
     }
@@ -256,11 +257,11 @@ void AddKlient(string imie, string nazwisko, string pesel, string nr_tel) {
 
 void AddPracownik(string imie, string nazwisko, string pesel, string nr_tel, string stanowisko) {
     ofstream file;
-    file.open("SaveKlient", ios::app);
+    file.open("SavePracownik", ios::app);
 
     if (file.is_open()) {
-        file << endl << imie << " " << nazwisko << " " << pesel << " " 
-            << nr_tel << " " << stanowisko;
+        file << imie << " " << nazwisko << " " << pesel << " " 
+            << nr_tel << " " << stanowisko << endl;
 
         file.close();
     }
@@ -332,11 +333,11 @@ void CreateSamochodObj() {
 
 void ReadAllSamochod() {
     for (int i = 0; i < samochod.size(); i++) {
-        //cout << "Model: " << samochod[i].SamModel.wersja << endl;
+        cout << i + 1 << ") Model: " << samochod[i].SamModel.wersja << endl;
         cout << "Numer rejestracyjny: " << samochod[i].nr_rejestracyjny << endl;
-        //cout << "Kolor: " << samochod[i].kolor << endl;
-        //cout << "Przebieg: " << samochod[i].przebieg << endl;
-        //cout << "Rocznik: " << samochod[i].rocznik << endl;
+        cout << "Kolor: " << samochod[i].kolor << endl;
+        cout << "Przebieg: " << samochod[i].przebieg << endl;
+        cout << "Rocznik: " << samochod[i].rocznik << endl << endl;
     }
 }
 
@@ -345,8 +346,8 @@ void AddSamochod(Model m, string nr_rej, string kolor, int przebieg, int rocznik
     file.open("SaveSamochod", ios::app);
 
     if (file.is_open()) {
-        file << endl << m.wersja << " " << nr_rej << " "
-            << kolor << " " << przebieg << " " << rocznik;
+        file << m.wersja << " " << nr_rej << " "
+            << kolor << " " << przebieg << " " << rocznik << endl;
 
         file.close();
     }
@@ -356,6 +357,7 @@ void AddSamochod(Model m, string nr_rej, string kolor, int przebieg, int rocznik
 }
 
 void RemoveObjSamochod(int index) {
+
     fstream file_i;
     file_i.open("SaveSamochod", ios::in);
 
@@ -370,7 +372,7 @@ void RemoveObjSamochod(int index) {
     fstream file_o;
     file_o.open("SaveSamochod", ios::out);
 
-    for (int i = 0; i < vec.size(); i++) {
+    for (int i = 0; i < vec.size() -1; i++) {
         if (i != index) {
             file_o << vec[i] << endl;
         }
@@ -410,11 +412,11 @@ void AddModel(string marka, string wersja, int moc_silnika,
     file.open("SaveModel", ios::app);
 
     if (file.is_open()) {
-        file << endl << marka << " " << wersja << " "
+        file << marka << " " << wersja << " "
             << moc_silnika << " " << skrzynia_biegow << " " 
             << paliwo << " " << sr_spalanie << " " << ilosc_drzwi 
             << " " << ilosc_miejsc << " " << poj_bagaznika << " " 
-            << klimatyzacja << " " <<  koszt_godzina;
+            << klimatyzacja << " " <<  koszt_godzina << endl;
 
         file.close();
     }
@@ -433,6 +435,7 @@ void RemoveObjModel(int index) {
     }
     if (IsSamochod) {
         cout << "Usun samochod o tym modelu przed ta operacja!" << endl;
+        system("pause");
     }
     else {
         fstream file_i;
@@ -464,7 +467,7 @@ void RemoveObjModel(int index) {
 
 void ReadAllModel() {
     for (int i = 0; i < model.size(); i++) {
-        cout << "Marka: " << model[i].marka << endl;
+        cout << i + 1 << ") Marka: " << model[i].marka << endl;
         cout << "Wersja: " << model[i].wersja << endl;
         cout << "Moc silnika: " <<model[i].moc_silnika << endl;
         cout << "Skrzynia biegow" << model[i].skrzynia_biegow << endl;
@@ -474,7 +477,7 @@ void ReadAllModel() {
         cout << "Ilosc miejsc: " << model[i].ilosc_miejsc << endl;
         cout << "Pojemnosc bagaznika: "<< model[i].poj_bagaznika << endl;
         cout << "Klimatyzacja: " << model[i].klimatyzacja << endl;
-        cout << "Koszt za godzine: " << model[i].koszt_godzina << endl;
+        cout << "Koszt za godzine: " << model[i].koszt_godzina << endl << endl;
     }
 }
 
@@ -494,7 +497,7 @@ repeat:
     cout << R"( _____________________________________ )" << endl;
     cout << R"(|     ____                            |)" << endl;
     cout << R"(|  __/  |_\_          Wypozyczalnia   |)" << endl;
-    cout << R"(| |  _     _``-.      Samochodow v0.0 |)" << endl;
+    cout << R"(| |  _     _``-.      Samochodow v0.1 |)" << endl;
     cout << R"(| '-(_)---(_)--'                      |)" << endl;
     cout << R"(|_____________________________________|)" << endl;
 
@@ -521,6 +524,10 @@ repeat:
     case 4:
         break;
     case 5:
+        cout << endl;
+        ReadAllSamochod();
+        system("pause");
+        goto repeat;
         break;
     case 6:
         system("CLS");
@@ -561,7 +568,9 @@ void menu_kierownik() {
         cout << endl << "Menu:" << endl;
         cout << "1) Dodanie samochodu do bazy" << endl;
         cout << "2) Usuniecie samochodu z bazy" << endl;
-        cout << "3) Powrot do glownego menu" << endl;
+        cout << "3) Usuniecie modelu z bazy" << endl;
+        cout << "4) Dodaj pracownika" << endl;
+        cout << "5) Powrot do glownego menu" << endl;
 
         int wybor;
         cout << "Twoj wybor: ";
@@ -590,7 +599,27 @@ void menu_kierownik() {
                 cin >> wybor;
 
                 if (wybor >= 1 && wybor <= model.size()) {
+                    Model m = model[wybor - 1];
+                    string nr_rej, kolor;
+                    int przebieg, rocznik;
                     
+                    cout << "Wartosci nalezy wprowadzac bez uzycia spacji!" << endl;
+                    cout << "Podaj numer rejestracyjny: ";
+                    cin >> nr_rej;
+
+                    cout << "Podaj kolor: ";
+                    cin >> kolor;
+
+                    cout << "Podaj przebieg: ";
+                    cin >> przebieg;
+
+                    cout << "Podaj rocznik: ";
+                    cin >> rocznik;
+
+                    AddSamochod(m, nr_rej, kolor, przebieg, rocznik);
+
+                    goto repeat;
+
                 } else if (wybor == model.size() + 1) {
 
                     string marka, wersja, skrzynia_biegow, paliwo;
@@ -645,8 +674,62 @@ void menu_kierownik() {
 
             break;
         case 2:
+            cout << endl << "Wybierz samochod do usuniecia: " << endl << endl;
+            ReadAllSamochod();
+            cout << samochod.size() + 1 << ") Powrot do menu" << endl;
+            cout << "Twoj wybor: ";
+            cin >> wybor;
+            if (wybor >= 1 && wybor <= samochod.size()) {
+                RemoveObjSamochod(wybor - 1);
+                goto repeat;
+            }
+            else if (wybor == samochod.size() + 1) {
+                goto repeat;
+            }
+            else {
+                goto repeat;
+            }
             break;
         case 3:
+            cout << endl << "Wybierz model do usuniecia: " << endl << endl;
+            ReadAllModel();
+            cout << model.size() + 1 << ") Powrot do menu" << endl;
+            cout << "Twoj wybor: ";
+            cin >> wybor;
+            if (wybor >= 1 && wybor <= model.size()) {
+                RemoveObjModel(wybor - 1);
+                goto repeat;
+            }
+            else if (wybor == model.size() + 1) {
+                goto repeat;
+            }
+            else {
+                goto repeat;
+            }
+            break;
+        case 4:
+            cout << endl << "Dodanie pracownika do bazy:" << endl;
+            {string imie, nazwisko, pesel, nr_tel, stanowisko;
+
+            cout << "Podaj imie: ";
+            cin >> imie;
+
+            cout << "Podaj nazwisko: ";
+            cin >> nazwisko;
+
+            cout << "Podaj pesel: ";
+            cin >> pesel;
+
+            cout << "Podaj numer telefonu: ";
+            cin >> nr_tel;
+
+            cout << "Podaj stanowisko: ";
+            cin >> stanowisko;
+
+            AddPracownik(imie, nazwisko, pesel, nr_tel, stanowisko); }
+            goto repeat;
+            break;
+        case 5:
             menu();
             break;
         default:
