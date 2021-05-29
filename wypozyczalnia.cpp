@@ -64,11 +64,11 @@ public:
     friend class Samochod;
     friend void ReadAllSamochod();
     friend void AddSamochod(Model, string, string, int, int);
+    friend void ReadAllModelVersion();
 };
 
 vector<Model> model;
 vector<Samochod> samochod;
-
 
 class Samochod {
     Model SamModel;
@@ -167,6 +167,7 @@ public:
     void znajdz(string telefon) {
 
     }
+
     friend void CreateKlientObj();
     friend void ReadAllKlient();
 };
@@ -237,6 +238,35 @@ void ReadAllKlient() {
         //cout << "Pesel: " << klient[i].pesel << endl;
         //cout << "Telefon: " << klient[i].nr_tel << endl;
     }
+}
+
+void AddKlient(string imie, string nazwisko, string pesel, string nr_tel) {
+    ofstream file;
+    file.open("SaveKlient", ios::app);
+
+    if (file.is_open()) {
+        file << endl << imie << " " << nazwisko << " " << pesel << " " << nr_tel;
+
+        file.close();
+    }
+
+    klient.clear();
+    CreateKlientObj();
+}
+
+void AddPracownik(string imie, string nazwisko, string pesel, string nr_tel, string stanowisko) {
+    ofstream file;
+    file.open("SaveKlient", ios::app);
+
+    if (file.is_open()) {
+        file << endl << imie << " " << nazwisko << " " << pesel << " " 
+            << nr_tel << " " << stanowisko;
+
+        file.close();
+    }
+
+    pracownik.clear();
+    CreatePracownikObj();
 }
 
 void CreateWypozyczenieObj() {
@@ -315,7 +345,7 @@ void AddSamochod(Model m, string nr_rej, string kolor, int przebieg, int rocznik
     file.open("SaveSamochod", ios::app);
 
     if (file.is_open()) {
-        file << m.wersja << " " << nr_rej << " "
+        file << endl << m.wersja << " " << nr_rej << " "
             << kolor << " " << przebieg << " " << rocznik;
 
         file.close();
@@ -435,28 +465,288 @@ void RemoveObjModel(int index) {
 void ReadAllModel() {
     for (int i = 0; i < model.size(); i++) {
         cout << "Marka: " << model[i].marka << endl;
-        //cout << "Wersja: " << model[i].wersja << endl;
-        //cout << "Moc silnika: " <<model[i].moc_silnika << endl;
-        //cout << "Skrzynia biegow" << model[i].skrzynia_biegow << endl;
-        //cout << "Paliwo:" << model[i].paliwo << endl;
-        //cout << "Srednie spalanie: " << model[i].sr_spalanie << endl;
-        //cout << "Ilosc drzwi: " << model[i].ilosc_drzwi << endl;
-        //cout << "Ilosc miejsc: " << model[i].ilosc_miejsc << endl;
-        //cout << "Pojemnosc bagaznika: "<< model[i].poj_bagaznika << endl;
-        //cout << "Klimatyzacja: " << model[i].klimatyzacja << endl;
-        //cout << "Koszt za godzine: " << model[i].koszt_godzina << endl;
+        cout << "Wersja: " << model[i].wersja << endl;
+        cout << "Moc silnika: " <<model[i].moc_silnika << endl;
+        cout << "Skrzynia biegow" << model[i].skrzynia_biegow << endl;
+        cout << "Paliwo:" << model[i].paliwo << endl;
+        cout << "Srednie spalanie: " << model[i].sr_spalanie << endl;
+        cout << "Ilosc drzwi: " << model[i].ilosc_drzwi << endl;
+        cout << "Ilosc miejsc: " << model[i].ilosc_miejsc << endl;
+        cout << "Pojemnosc bagaznika: "<< model[i].poj_bagaznika << endl;
+        cout << "Klimatyzacja: " << model[i].klimatyzacja << endl;
+        cout << "Koszt za godzine: " << model[i].koszt_godzina << endl;
     }
 }
 
+void ReadAllModelVersion() {
+    for (int i = 0; i < model.size(); i++) {
+        cout << i + 1 << ") " << model[i].marka << endl;
+    }
+}
+
+void menu_kierownik();
+void menu_serwisant();
+
+void menu() {
+
+repeat:
+    system("CLS");
+    cout << R"( _____________________________________ )" << endl;
+    cout << R"(|     ____                            |)" << endl;
+    cout << R"(|  __/  |_\_          Wypozyczalnia   |)" << endl;
+    cout << R"(| |  _     _``-.      Samochodow v0.0 |)" << endl;
+    cout << R"(| '-(_)---(_)--'                      |)" << endl;
+    cout << R"(|_____________________________________|)" << endl;
+
+    cout << "Menu:" << endl;
+    cout << "1) Rezerwacja samochodu" << endl;
+    cout << "2) Anulowanie rezerwacji" << endl;
+    cout << "3) Wydanie samochodu" << endl;
+    cout << "4) Zwrot samochodu" << endl;
+    cout << "5) Przeglad samochodow" << endl;
+    cout << "6) Operacje kierownika" << endl;
+    cout << "7) Operacje serwisanta" << endl;
+
+    int wybor;
+    cout << "Twoj wybor: ";
+    cin >> wybor;
+
+    switch (wybor) {
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    case 5:
+        break;
+    case 6:
+        system("CLS");
+        menu_kierownik();
+        break;
+    case 7:
+        system("CLS");
+        menu_serwisant();
+        break;
+    default:
+        goto repeat;
+        break;
+    }
+}
+
+void menu_kierownik() {
+    cout << R"( _____________________________________ )" << endl;
+    cout << R"(|  .--.                               |)" << endl;
+    cout << R"(| /.-. '----------.    Operacje       |)" << endl;
+    cout << R"(| \'-' .--"--""-"-'    Kierownika     |)" << endl;
+    cout << R"(|  '--'                               |)" << endl;
+    cout << R"(|_____________________________________|)" << endl;
+
+    string kod;
+    cout << endl << "Podaj kod dostepu: ";
+    cin >> kod;
+
+    if (kod == "qwe123") {
+    repeat:
+        system("CLS");
+        cout << R"( _____________________________________ )" << endl;
+        cout << R"(|  .--.                               |)" << endl;
+        cout << R"(| /.-. '----------.    Operacje       |)" << endl;
+        cout << R"(| \'-' .--"--""-"-'    Kierownika     |)" << endl;
+        cout << R"(|  '--'                               |)" << endl;
+        cout << R"(|_____________________________________|)" << endl;
+
+        cout << endl << "Menu:" << endl;
+        cout << "1) Dodanie samochodu do bazy" << endl;
+        cout << "2) Usuniecie samochodu z bazy" << endl;
+        cout << "3) Powrot do glownego menu" << endl;
+
+        int wybor;
+        cout << "Twoj wybor: ";
+        cin >> wybor;
+
+        switch (wybor) {
+        case 1:
+            system("CLS");
+            cout << R"( _____________________________________ )" << endl;
+            cout << R"(|  .--.                               |)" << endl;
+            cout << R"(| /.-. '----------.    Operacje       |)" << endl;
+            cout << R"(| \'-' .--"--""-"-'    Kierownika     |)" << endl;
+            cout << R"(|  '--'                               |)" << endl;
+            cout << R"(|_____________________________________|)" << endl;
+
+            cout << endl << "Dodanie samochodu do bazy:" << endl;
+            cout << "Wybierz model:" << endl;
+
+            {
+                ReadAllModelVersion();
+                cout << model.size() + 1 << ") Dodaj nowy model" << endl;
+                cout << model.size() + 2 << ") Powrot do menu" << endl;
+
+                int wybor;
+                cout << "Twoj wybor: ";
+                cin >> wybor;
+
+                if (wybor >= 1 && wybor <= model.size()) {
+                    
+                } else if (wybor == model.size() + 1) {
+
+                    string marka, wersja, skrzynia_biegow, paliwo;
+                    int moc_silnika, ilosc_drzwi, ilosc_miejsc;
+                    float sr_spalanie, poj_bagaznika, koszt_godzina;
+                    bool klimatyzycja;
+                    cout << "Wartosci nalezy wprowadzac bez uzycia spacji!" << endl;
+                    cout << "Podaj marke: ";
+                    cin >> marka;
+
+                    cout << "Podaj wersje: ";
+                    cin >> wersja;
+
+                    cout << "Podaj rodzaj skrzyni biegow: ";
+                    cin >> skrzynia_biegow;
+
+                    cout << "Podaj rodzaj paliwa: ";
+                    cin >> paliwo;
+
+                    cout << "Podaj moc silnika: ";
+                    cin >> moc_silnika;
+
+                    cout << "Podaj ilosc drzwi: ";
+                    cin >> ilosc_drzwi;
+
+                    cout << "Podaj ilosc miejsc: ";
+                    cin >> ilosc_miejsc;
+
+                    cout << "Podaj srednie spalanie: ";
+                    cin >> sr_spalanie;
+
+                    cout << "Podaj pojemnosc bagaznika: ";
+                    cin >> poj_bagaznika;
+
+                    cout << "Podaj koszt godzinny: ";
+                    cin >> koszt_godzina;
+
+                    cout << "Czy posiada klimatyzacje? [0/ 1]: ";
+                    cin >> klimatyzycja;
+
+                    AddModel(marka, wersja, moc_silnika, skrzynia_biegow, paliwo, sr_spalanie,
+                        ilosc_drzwi, ilosc_miejsc, poj_bagaznika, klimatyzycja, koszt_godzina);
+                    goto repeat;
+
+                } else if (wybor == model.size() + 2) {
+                    goto repeat;
+                }
+                else {
+                    goto repeat;
+                }
+            }
+
+            break;
+        case 2:
+            break;
+        case 3:
+            menu();
+            break;
+        default:
+            goto repeat;
+            break;
+        }
+
+    }
+    else {
+        char wybor;
+        cout << "Kod nieprawidlowy. Chcesz sprobowac ponownie? [T/ N]: ";
+        cin >> wybor;
+
+        if (wybor == 'T' || wybor == 't') {
+            system("CLS");
+            menu_kierownik();
+        }
+        else {
+            system("CLS");
+            menu();
+        }
+    }
+}
+
+void menu_serwisant() {
+    cout << R"( _____________________________________ )" << endl;
+    cout << R"(|   ,-----.                           |)" << endl;
+    cout << R"(|  / ,---. \                          |)" << endl;
+    cout << R"(| / /     \ \          Operacje       |)" << endl;
+    cout << R"(| \ \     / /          Serwisowe      |)" << endl;
+    cout << R"(|  \ `---' /                          |)" << endl;
+    cout << R"(|   `-----'                           |)" << endl;
+    cout << R"(|_____________________________________|)" << endl;
+
+    string kod;
+    cout << endl << "Podaj kod dostepu: ";
+    cin >> kod;
+
+    if (kod == "qwe123") {
+    repeat:
+        system("CLS");
+        cout << R"( _____________________________________ )" << endl;
+        cout << R"(|   ,-----.                           |)" << endl;
+        cout << R"(|  / ,---. \                          |)" << endl;
+        cout << R"(| / /     \ \          Operacje       |)" << endl;
+        cout << R"(| \ \     / /          Serwisowe      |)" << endl;
+        cout << R"(|  \ `---' /                          |)" << endl;
+        cout << R"(|   `-----'                           |)" << endl;
+        cout << R"(|_____________________________________|)" << endl;
+
+        cout << endl << "Menu:" << endl;
+        cout << "1) Potwierdzenie gotowosci samochodu" << endl;
+        cout << "2) Raport serwisu samochodu" << endl;
+        cout << "3) Raport kontroli samochodu" << endl;
+        cout << "4) Powrot do glownego menu" << endl;
+
+        int wybor;
+        cout << "Twoj wybor: ";
+        cin >> wybor;
+
+        switch (wybor) {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            menu();
+            break;
+        default:
+            goto repeat;
+            break;
+        }
+
+    }
+    else {
+        char wybor;
+        cout << "Kod nieprawidlowy. Chcesz sprobowac ponownie? [T/ N]: ";
+        cin >> wybor;
+
+        if (wybor == 'T' || wybor == 't') {
+            system("CLS");
+            menu_kierownik();
+        }
+        else {
+            system("CLS");
+            menu();
+        }
+    }
+}
 
 
 int main()
 {
     CreateModelObj();
-    ReadAllModel();
+    CreateKlientObj();
+    CreatePracownikObj();
+    CreateSamochodObj();
+    CreateWypozyczenieObj();
 
-    cout << "##########################" << endl;
-
-    AddModel("test", "test", 2, "test", "test", 2.2, 2,2,2,1,2.2);
-    ReadAllModel();
+    menu();
 }
