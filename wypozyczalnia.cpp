@@ -2,7 +2,6 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include <conio.h>
 
 using namespace std;
 
@@ -78,7 +77,6 @@ class Samochod {
     int przebieg;
     int rocznik;
 public:
-    static int licznik;
 
 public:
     Samochod(Model model = Model(), string nr_rejestracyjny = "",
@@ -98,43 +96,20 @@ public:
         }
     }
 
+    
+
 
 
     friend void CreateSamochodObj();
     friend void ReadAllSamochod();
     friend void RemoveObjModel(int);
     friend void AddSamochod(Model, string, string, int, int);
-};
-
-struct Date {
-    short rok;
-    short miesiac;
-    short dzien;
-    short godzina;
-    short minuty;
-};
-
-class Wypozyczenie {
-    Date wyp_od;
-    Date wyp_do;
-    int wyp_przebieg;
-    int zwr_przebieg;
-    int nr_zamowienia;
-public:
-    Wypozyczenie(Date wyp_od = Date(), Date wyp_do = Date(), int wyp_przebieg = 0,
-        int zwr_przebieg = 0, int nr_zamowienia = 0) {
-        this->wyp_od = wyp_od;
-        this->wyp_do = wyp_do;
-        this->wyp_przebieg = wyp_przebieg;
-        this->zwr_przebieg = zwr_przebieg;
-        this->nr_zamowienia = nr_zamowienia;
-    }
-
-    friend void CreateWypozyczenieObj();
     friend void ReadAllWypozyczenia();
+    friend int ZnajdzSamochod(string);
+    friend string GetNrRej(int);
 };
 
-vector<Wypozyczenie> wypozyczenie;
+
 
 class Osoba {
 protected:
@@ -162,15 +137,16 @@ public:
     void dodaj() {
 
     }
-    void znajdz(int pesel) {
+    
+    void znajdz(int telefon) {
 
     }
-    void znajdz(string telefon) {
-
-    }
+    
 
     friend void CreateKlientObj();
     friend void ReadAllKlient();
+    friend void ReadAllWypozyczenia();
+    friend int ZnajdzKlient(string);
 };
 
 vector<Klient> klient;
@@ -190,9 +166,64 @@ public:
     }
     friend void CreatePracownikObj();
     friend void ReadAllPracownik();
+    friend void ReadAllWypozyczenia();
+    friend int ZnajdzPracownik(string);
 };
 
 vector<Pracownik> pracownik;
+
+struct Date {
+    string rok;
+    string miesiac;
+    string dzien;
+    string godzina;
+    string minuty;
+
+    Date(string r = "", string m = "", string d = "", string g = "", string min = "") {
+        rok = r;
+        miesiac = m;
+        dzien = d;
+        godzina = g;
+        minuty = min;
+    }
+};
+
+class Wypozyczenie {
+    Date wyp_od;
+    Date wyp_do;
+    Klient k;
+    Samochod s;
+    Pracownik p;
+    int wyp_przebieg;
+    int zwr_przebieg;
+    int status; //0 - anulowny, 1 - zarezerwowany, 2 - oderbrany, 3 -zwrocony
+    int nr_zamowienia;
+public:
+    Wypozyczenie(Date wyp_od = Date(), Date wyp_do = Date(),
+        Klient k = Klient(), Samochod s = Samochod(), Pracownik p = Pracownik(),
+        int wyp_przebieg = 0, int zwr_przebieg = 0, int status = 0,
+        int nr_zamowienia = 0) {
+        this->wyp_od = wyp_od;
+        this->wyp_do = wyp_do;
+        this->k = k;
+        this->s = s;
+        this->p = p;
+        this->wyp_przebieg = wyp_przebieg;
+        this->zwr_przebieg = zwr_przebieg;
+        this->nr_zamowienia = nr_zamowienia;
+        this->status = status;
+    }
+
+    int GetNo() {
+        return nr_zamowienia;
+    }
+
+    friend void CreateWypozyczenieObj();
+    friend void ReadAllWypozyczenia();
+    friend void AddWypozyczenie();
+};
+
+vector<Wypozyczenie> wypozyczenie;
 
 void CreatePracownikObj() {
     Pracownik temp;
@@ -241,6 +272,31 @@ void ReadAllKlient() {
     }
 }
 
+int ZnajdzKlient(string pesel) {
+    for (int i = 0; i < klient.size(); i++) {
+        if (pesel == klient[i].pesel) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int ZnajdzPracownik(string pesel) {
+    for (int i = 0; i < pracownik.size(); i++) {
+        if (pesel == pracownik[i].pesel) {
+            return i;
+        }
+    }
+}
+
+int ZnajdzSamochod(string nr_rej) {
+    for (int i = 0; i < samochod.size(); i++) {
+        if (nr_rej == samochod[i].nr_rejestracyjny) {
+            return i;
+        }
+    }
+}
+
 void AddKlient(string imie, string nazwisko, string pesel, string nr_tel) {
     ofstream file;
     file.open("SaveKlient", ios::app);
@@ -272,18 +328,24 @@ void AddPracownik(string imie, string nazwisko, string pesel, string nr_tel, str
 
 void CreateWypozyczenieObj() {
     Wypozyczenie temp;
+    string k, s, p;
 
     fstream file;
     file.open("SaveWypozyczenie", ios::in);
 
     if (file.is_open()) {
+        
         while (file >> temp.wyp_od.rok >> temp.wyp_od.miesiac >> 
             temp.wyp_od.dzien >> temp.wyp_od.godzina >> 
             temp.wyp_od.minuty >> temp.wyp_do.rok >> temp.wyp_do.miesiac >>
             temp.wyp_do.dzien >> temp.wyp_do.godzina >>
-            temp.wyp_do.minuty >> temp.wyp_przebieg >> temp.zwr_przebieg >>
-            temp.nr_zamowienia) {
+            temp.wyp_do.minuty >> k >> s >> p >> temp.wyp_przebieg >> temp.zwr_przebieg >>
+            temp.status >> temp.nr_zamowienia) {
 
+            temp.k = klient[ZnajdzKlient(k)];
+            temp.s = samochod[ZnajdzSamochod(s)];
+            temp.p = pracownik[ZnajdzPracownik(p)];
+            
             wypozyczenie.push_back(temp);
         }
         file.close();
@@ -291,26 +353,61 @@ void CreateWypozyczenieObj() {
 }
 
 void ReadAllWypozyczenia() {
+    cout << wypozyczenie.size();
     for (int i = 0; i < wypozyczenie.size(); i++) {
-        //cout << "Data wypozyczenia: " << 
-            //wypozyczenie[i].wyp_od.rok << " " <<
-            //wypozyczenie[i].wyp_od.miesiac << " " <<
-            //wypozyczenie[i].wyp_od.dzien << " " << 
-            //wypozyczenie[i].wyp_od.godzina << ":" <<
-            //wypozyczenie[i].wyp_od.minuty << endl;
-        //cout << "Data Oddania: " <<
-            //wypozyczenie[i].wyp_do.rok << " " <<
-            //wypozyczenie[i].wyp_do.miesiac << " " <<
-            //wypozyczenie[i].wyp_do.dzien << " " <<
-            //wypozyczenie[i].wyp_do.godzina << ":" <<
-            //wypozyczenie[i].wyp_do.minuty << endl;
-        //cout << "Wypozyczony przebieg: " <<
-            //wypozyczenie[i].wyp_przebieg << endl;
-        //cout << "Zwrocony przebieg: " <<
-            //wypozyczenie[i].zwr_przebieg << endl;
+        cout << "Data wypozyczenia: " << 
+        wypozyczenie[i].wyp_od.rok << " " <<
+        wypozyczenie[i].wyp_od.miesiac << " " <<
+        wypozyczenie[i].wyp_od.dzien << " " << 
+        wypozyczenie[i].wyp_od.godzina << ":" <<
+        wypozyczenie[i].wyp_od.minuty << endl;
+
+        cout << "Data Oddania: " <<
+        wypozyczenie[i].wyp_do.rok << " " <<
+        wypozyczenie[i].wyp_do.miesiac << " " <<
+        wypozyczenie[i].wyp_do.dzien << " " <<
+        wypozyczenie[i].wyp_do.godzina << ":" <<
+        wypozyczenie[i].wyp_do.minuty << endl;
+
+        cout << "Wpozyczone przez: " <<
+            wypozyczenie[i].k.pesel << endl;
+
+        cout << "Wpozyczony samochod: " <<
+            wypozyczenie[i].s.nr_rejestracyjny << endl;
+
+        cout << "Wpozyczonone przez pracownika: " <<
+            wypozyczenie[i].p.pesel << endl;
+
+        cout << "Wypozyczony przebieg: " <<
+        wypozyczenie[i].wyp_przebieg << endl;
+
+        cout << "Zwrocony przebieg: " <<
+        wypozyczenie[i].zwr_przebieg << endl;
+
         cout << "Numer zamowienia: " <<
-            wypozyczenie[i].nr_zamowienia << endl;
+        wypozyczenie[i].nr_zamowienia << endl;
     }
+}
+
+void AddWypozyczenie(Date wod, Date wdo, string k, string s, string p, 
+    int wyp_przebieg, int zwr_przebieg, int status, int nr_zam) {
+    
+    ofstream file;
+    file.open("SaveWypozyczenie", ios::app);
+
+    if (file.is_open()) {
+        file << wod.rok << " " << wod.miesiac << " " << wod.dzien <<
+            " " << wod.godzina << " " << wod.minuty << " " << wdo.rok <<
+            " " << wdo.miesiac << " " << wdo.dzien <<
+            " " << wdo.godzina << " " << wdo.minuty << " " <<
+            k << " " << s << " " << p << " " << wyp_przebieg << " " <<
+            zwr_przebieg << " " << status << " " << nr_zam <<  endl;
+
+        file.close();
+    }
+
+    wypozyczenie.clear();
+    CreateWypozyczenieObj();
 }
 
 void CreateSamochodObj() {
@@ -329,6 +426,10 @@ void CreateSamochodObj() {
         }
         file.close();
     }
+}
+
+string GetNrRej(int index) {
+    return samochod[index].nr_rejestracyjny;
 }
 
 void ReadAllSamochod() {
@@ -516,6 +617,80 @@ repeat:
 
     switch (wybor) {
     case 1:
+        cout << "Rezerwacja samochodu" << endl;
+        {
+            Date wod, wdo;
+            string k, s, p;
+            int wyp_przebieg, zwr_przebieg, status, nr_zam;
+
+            cout << "Podaj rok wypozyczenia: ";
+            cin >> wod.rok;
+
+            cout << "Podaj miesiac wypozyczenia: ";
+            cin >> wod.miesiac;
+
+            cout << "Podaj dzien wypozyczenia: ";
+            cin >> wod.dzien;
+
+            cout << "Podaj godzine wypozyczenia: ";
+            cin >> wod.godzina;
+
+            cout << "Podaj minuty wypozyczenia: ";
+            cin >> wod.minuty;
+
+            cout << "Podaj rok zwrotu: ";
+            cin >> wdo.rok;
+
+            cout << "Podaj miesiac zwrotu: ";
+            cin >> wdo.miesiac;
+
+            cout << "Podaj dzien zwrotu: ";
+            cin >> wdo.dzien;
+
+            cout << "Podaj godzine zwrotu: ";
+            cin >> wdo.godzina;
+
+            cout << "Podaj minuty zwrotu: ";
+            cin >> wdo.minuty;
+
+            cout << "Podaj pesel klienta: ";
+            cin >> k;
+
+            if (ZnajdzKlient(k) == -1) {
+                cout << "Nie ma klienta w bazie. Prosze wprowadzic dane:" << endl;
+
+                string imie, nazwisko, nr_tel;
+
+                cout << "Podaj imie: ";
+                cin >> imie;
+
+                cout << "Podaj nazwisko: ";
+                cin >> nazwisko;
+
+                cout << "Podaj nr telefonu: ";
+                cin >> nr_tel;
+
+                AddKlient(imie, nazwisko, k, nr_tel);
+            }
+
+            cout << endl << "Prosze wybrac samochod: " << endl;
+            ReadAllSamochod();
+            cout << "Twoj wybor: ";
+            cin >> wybor;
+
+            s = GetNrRej(wybor - 1);
+
+            cout << "Podaj pesel pracownika: ";
+            cin >> p;
+
+            cout << "Podaj aktualny przebieg samochodu: ";
+            cin >> wyp_przebieg;
+
+            nr_zam = wypozyczenie[wypozyczenie.size() - 1].GetNo() + 1;
+
+            AddWypozyczenie(wod, wdo, k, s, p, wyp_przebieg, 0, 0, nr_zam);
+            goto repeat;
+        }
         break;
     case 2:
         break;
