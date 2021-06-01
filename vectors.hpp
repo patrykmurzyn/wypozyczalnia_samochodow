@@ -8,11 +8,14 @@ using namespace std;
 
 #include "Model.hpp"
 #include "Samochod.hpp"
+#include "Klient.hpp"
+#include "Pracownik.hpp"
+#include "Wypozyczenie.hpp"
 
 extern vector<Model> model;
 extern vector<Samochod> samochod;
-//vector<Klient> klient;
-//vector<Pracownik> pracownik;
+extern vector<Klient> klient;
+extern vector<Pracownik> pracownik;
 //vector<Wypozyczenie> wypozyczenie;
 
 #endif

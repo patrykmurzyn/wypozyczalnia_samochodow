@@ -6,6 +6,10 @@
 #include "vectors.hpp"
 #include "Model.hpp"
 #include "Samochod.hpp"
+#include "Osoba.hpp"
+#include "Klient.hpp"
+#include "Pracownik.hpp"
+#include "Wypozyczenie.hpp"
 
 using namespace std;
 
