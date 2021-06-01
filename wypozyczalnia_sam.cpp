@@ -32,6 +32,7 @@ class Model {
     float koszt_godzina;
 
 public:
+
     Model(string marka = "", string wersja = "", int moc_silnika = 0,
         string skrzynia_biegow = "", string paliwo = "",
         float sr_spalanie = 0.0f, int ilosc_drzwi = 0,
@@ -51,30 +52,115 @@ public:
         this->koszt_godzina = koszt_godzina;
     }
 
-    static void CreateModelObj() {
-        Model temp;
+    static void CreateObjs();
 
-        fstream file;
-        file.open("SaveModel", ios::in);
+    static void ReadAll();
 
-        if (file.is_open()) {
-            while (file >> temp.marka >> temp.wersja >> temp.moc_silnika >>
-                temp.skrzynia_biegow >> temp.paliwo >> temp.sr_spalanie >>
-                temp.ilosc_drzwi >> temp.ilosc_miejsc >> temp.poj_bagaznika >>
-                temp.klimatyzacja >> temp.koszt_godzina) {
-
-                model.push_back(temp);
-            }
-            file.close();
-        }
-    }
-
+    friend class Samochod;
 
 };
+
+void Model::CreateObjs() {
+    Model temp;
+
+    fstream file;
+    file.open("SaveModel", ios::in);
+
+    if (file.is_open()) {
+        while (file >> temp.marka >> temp.wersja >> temp.moc_silnika >>
+            temp.skrzynia_biegow >> temp.paliwo >> temp.sr_spalanie >>
+            temp.ilosc_drzwi >> temp.ilosc_miejsc >> temp.poj_bagaznika >>
+            temp.klimatyzacja >> temp.koszt_godzina) {
+
+            model.push_back(temp);
+        }
+        file.close();
+    }
+}
+
+void Model::ReadAll() {
+    for (int i = 0; i < model.size(); i++) {
+        cout << i + 1 << ") Marka: " << model[i].marka << endl;
+        cout << "Wersja: " << model[i].wersja << endl;
+        cout << "Moc silnika: " << model[i].moc_silnika << endl;
+        cout << "Skrzynia biegow" << model[i].skrzynia_biegow << endl;
+        cout << "Paliwo:" << model[i].paliwo << endl;
+        cout << "Srednie spalanie: " << model[i].sr_spalanie << endl;
+        cout << "Ilosc drzwi: " << model[i].ilosc_drzwi << endl;
+        cout << "Ilosc miejsc: " << model[i].ilosc_miejsc << endl;
+        cout << "Pojemnosc bagaznika: " << model[i].poj_bagaznika << endl;
+        cout << "Klimatyzacja: " << model[i].klimatyzacja << endl;
+        cout << "Koszt za godzine: " << model[i].koszt_godzina << endl << endl;
+    }
+}
 
 class Samochod {
+    Model SamModel;
+    string nr_rejestracyjny;
+    string kolor;
+    int przebieg;
+    int rocznik;
 
+public:
+
+    Samochod(Model model = Model(), string nr_rejestracyjny = "",
+        string kolor = "", int przebieg = 0, int rocznik = 0) {
+        this->SamModel = model;
+        this->nr_rejestracyjny = nr_rejestracyjny;
+        this->kolor = kolor;
+        this->przebieg = przebieg;
+        this->rocznik = rocznik;
+    }
+
+    static bool IsModel(int index);
+
+    static void RemoveObjModel(int index);
+
+    friend class Model;
 };
+
+bool Samochod::IsModel(int index){
+    for (int i = 0; i < samochod.size(); i++) {
+        if (model[index].wersja == samochod[i].SamModel.wersja) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Samochod::RemoveObjModel(int index) {
+
+    if (Samochod::IsModel(index)) {
+        cout << "Usun samochod o tym modelu przed ta operacja!" << endl;
+        system("pause");
+    }
+    else {
+        fstream file_i;
+        file_i.open("SaveModel", ios::in);
+
+        string line;
+        vector<string> vec;
+
+        while (getline(file_i, line)) {
+            vec.push_back(line);
+        }
+        file_i.close();
+
+        fstream file_o;
+        file_o.open("SaveModel", ios::out);
+
+        for (int i = 0; i < vec.size(); i++) {
+            if (i != index) {
+                file_o << vec[i] << endl;
+            }
+        }
+
+        file_o.close();
+
+        model.clear();
+        Model::CreateObjs();
+    }
+}
 
 class Osoba {
 
@@ -94,5 +180,8 @@ class Wypozyczenie {
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Model::CreateObjs();
+    Model::ReadAll();
+    Samochod::RemoveObjModel(2);
+    Model::ReadAll();
 }
