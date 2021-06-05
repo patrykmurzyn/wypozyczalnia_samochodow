@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
-
+#include <limits>
 #include "vectors.hpp"
 #include "Model.hpp"
 #include "Samochod.hpp"
@@ -15,7 +15,12 @@ using namespace std;
 
 int GetInput() {
     int choice;
-    cin >> choice;
+    while (!(cin >> choice))
+    {
+        cout << endl << " Podano nieprawidłowe dane!. Podaj ponownie twój wybór: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
     return choice;
 }
 
@@ -45,7 +50,7 @@ repeat:
 
     cout << endl << " Twój wybór: ";
     int choice = GetInput();
-
+    
     switch (choice) {
     case 1:
         break;
@@ -64,6 +69,9 @@ repeat:
     case 7:
         system("CLS");
         menu_serwisant();
+        break;
+    default:
+        menu();
         break;
     }
 
@@ -106,32 +114,52 @@ void menu_kierownik() {
         switch (choice)
         {
         case 1:
-        {
-        system("CLS");
-        cout << R"( _____________________________________ )" << endl;
-        cout << R"(|  .--.                               |)" << endl;
-        cout << R"(| /.-. '----------.    Operacje       |)" << endl;
-        cout << R"(| \'-' .--"--""-"-'    Kierownika     |)" << endl;
-        cout << R"(|  '--'                               |)" << endl;
-        cout << R"(|_____________________________________|)" << endl;
+            {
+            system("CLS");
+            cout << R"( _____________________________________ )" << endl;
+            cout << R"(|  .--.                               |)" << endl;
+            cout << R"(| /.-. '----------.    Operacje       |)" << endl;
+            cout << R"(| \'-' .--"--""-"-'    Kierownika     |)" << endl;
+            cout << R"(|  '--'                               |)" << endl;
+            cout << R"(|_____________________________________|)" << endl;
 
-        cout << endl << "Dodanie samochodu do bazy:" << endl;
-        cout << "Wybierz model:" << endl;
+            cout << endl << "Dodanie samochodu do bazy:" << endl;
+            cout << "Wybierz model:" << endl;
 
-        Model::ReadAllVersion();
+            Model::ReadAllVersion();
 
-        cout << model.size() + 1 << ") Dodaj nowy model" << endl;
-        cout << model.size() + 2 << ") Powrót do menu" << endl;
+            cout << model.size() + 1 << ") Dodaj nowy model" << endl;
+            cout << model.size() + 2 << ") Powrót do menu" << endl;
 
-        cout << "Twój wybór: ";
-        int choice = GetInput();
+            cout << "Twój wybór: ";
+            int choice = GetInput();
 
-        }
-        break;
+            }
+            break;
+        case 5:
+            system("CLS");
+            menu();
+            break;
         default:
+            goto repeat;
             break;
         }
     }
+    else {
+        char wybor;
+        cout << endl << " Kod dostępu nieprawidlowy. Chcesz sprobowac ponownie? [T/N]: ";
+        cin >> wybor;
+
+        if (wybor == 'T' || wybor == 't') {
+            system("CLS");
+            menu_kierownik();
+        }
+        else {
+            system("CLS");
+            menu();
+        }
+    }
+
 }
 
 void menu_serwisant() {
@@ -186,6 +214,20 @@ void menu_serwisant() {
             break;
         }
     }
+    else {
+        char wybor;
+        cout << endl << " Kod dostępu nieprawidlowy. Chcesz sprobowac ponownie? [T/N]: ";
+        cin >> wybor;
+
+        if (wybor == 'T' || wybor == 't') {
+            system("CLS");
+            menu_kierownik();
+        }
+        else {
+            system("CLS");
+            menu();
+        }
+    }
 }
 
 int main()
@@ -199,4 +241,5 @@ int main()
     Wypozyczenie::CreateObj();
     
     menu();
+    system("pause>0");
 }
