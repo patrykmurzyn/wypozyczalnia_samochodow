@@ -28,6 +28,12 @@ public:
 
     static void RemoveObjModel(int index);
 
+    static Model GetModel(string nazwa);
+
+    static void CreateObj();
+
+    static int FindSamochod(string nr_rej);
+
     friend class Model;
 };
 

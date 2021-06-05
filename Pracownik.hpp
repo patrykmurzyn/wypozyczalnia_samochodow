@@ -13,6 +13,10 @@ public:
         string, string);
 
     Pracownik();
+
+    static void CreateObj();
+
+    static int FindPracownik(string pesel);
 };
 
 #endif

@@ -27,17 +27,7 @@ Model::Model(string marka, string wersja, int moc_silnika,
 }
 
 Model::Model() {
-    this->marka = "";
-    this->wersja = "";
-    this->moc_silnika = 0;
-    this->skrzynia_biegow = "";
-    this->paliwo = "";
-    this->sr_spalanie = 0;
-    this->ilosc_drzwi = 0;
-    this->ilosc_miejsc = 0;
-    this->poj_bagaznika = 0;
-    this->klimatyzacja = 0;
-    this->koszt_godzina = 0;
+
 }
 
 void Model::CreateObjs() {
@@ -71,5 +61,11 @@ void Model::ReadAll() {
         cout << "Pojemnosc bagaznika: " << model[i].poj_bagaznika << endl;
         cout << "Klimatyzacja: " << model[i].klimatyzacja << endl;
         cout << "Koszt za godzine: " << model[i].koszt_godzina << endl << endl;
+    }
+}
+
+void Model::ReadAllVersion() {
+    for (int i = 0; i < model.size(); i++) {
+        cout << i + 1 << ") " << model[i].marka << endl;
     }
 }

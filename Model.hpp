@@ -27,6 +27,8 @@ public:
 
     static void ReadAll();
 
+    static void ReadAllVersion();
+
     friend class Samochod;
 
 };

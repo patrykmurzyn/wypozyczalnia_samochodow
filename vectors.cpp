@@ -4,3 +4,4 @@ vector<Model> model;
 vector<Samochod> samochod;
 vector<Klient> klient;
 vector<Pracownik> pracownik;
+vector<Wypozyczenie> wypozyczenie;

@@ -5,11 +5,17 @@
 
 using namespace std;
 
-class Klient :Osoba {
+class Klient :public Osoba {
 public:
     Klient(string , string, string, string);
 
     Klient();
+
+    string GetName();
+
+    static void CreateObj();
+
+    static int FindKlient(string pesel);
 };
 
 #endif

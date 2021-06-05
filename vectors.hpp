@@ -2,10 +2,6 @@
 #define VECTORS_HPP
 
 #include <vector>
-#include <iostream>
-
-using namespace std;
-
 #include "Model.hpp"
 #include "Samochod.hpp"
 #include "Klient.hpp"
@@ -16,6 +12,6 @@ extern vector<Model> model;
 extern vector<Samochod> samochod;
 extern vector<Klient> klient;
 extern vector<Pracownik> pracownik;
-//vector<Wypozyczenie> wypozyczenie;
+extern vector<Wypozyczenie> wypozyczenie;
 
 #endif
