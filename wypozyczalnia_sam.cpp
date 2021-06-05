@@ -31,17 +31,19 @@ repeat:
     cout << R"(| |  _     _``-.      Samochodów v0.2 |)" << endl;
     cout << R"(| '-(_)---(_)--'                      |)" << endl;
     cout << R"(|_____________________________________|)" << endl;
+    cout << R"( _____________________________________ )" << endl;
+    cout << R"(|  Menu:                              |)" << endl;
+    cout << R"(|                                     |)" << endl;
+    cout << R"(|  1) Rezerwacja samochodu            |)" << endl;
+    cout << R"(|  2) Anulowanie rezerwacji           |)" << endl;
+    cout << R"(|  3) Wydanie samochodu               |)" << endl;
+    cout << R"(|  4) Zwrot samochodu                 |)" << endl;
+    cout << R"(|  5) Przegląd samochodów             |)" << endl;
+    cout << R"(|  6) Operacje kierownika             |)" << endl;
+    cout << R"(|  7) Operacje serwisanta             |)" << endl;
+    cout << R"(|_____________________________________|)" << endl;
 
-    cout << endl << "Menu:" << endl;
-    cout << "1) Rezerwacja samochodu" << endl;
-    cout << "2) Anulowanie rezerwacji" << endl;
-    cout << "3) Wydanie samochodu" << endl;
-    cout << "4) Zwrot samochodu" << endl;
-    cout << "5) Przegląd samochodów" << endl;
-    cout << "6) Operacje kierownika" << endl;
-    cout << "7) Operacje serwisanta" << endl;
-
-    cout << "Twój wybór: ";
+    cout << endl << " Twój wybór: ";
     int choice = GetInput();
 
     switch (choice) {
@@ -76,7 +78,7 @@ void menu_kierownik() {
     cout << R"(|_____________________________________|)" << endl;
 
     string kod;
-    cout << endl << "Podaj kod dostępu: ";
+    cout << endl << " Podaj kod dostępu: ";
     cin >> kod;
 
     if (kod == "qwe123") {
@@ -88,16 +90,17 @@ void menu_kierownik() {
         cout << R"(| \'-' .--"--""-"-'    Kierownika     |)" << endl;
         cout << R"(|  '--'                               |)" << endl;
         cout << R"(|_____________________________________|)" << endl;
-
-        cout << endl << "Menu:" << endl;
-        cout << "1) Dodanie samochodu do bazy" << endl;
-        cout << "2) Usunięcie samochodu z bazy" << endl;
-        cout << "3) Usunięcie modelu z bazy" << endl;
-        cout << "4) Dodanie pracownika" << endl;
-        cout << "5) Powrót do głównego menu" << endl;
-
-        
-        cout << "Twój wybór: ";
+        cout << R"( _____________________________________ )" << endl;
+        cout << R"(|  Menu Kierownika:                   |)" << endl;
+        cout << R"(|                                     |)" << endl;
+        cout << R"(|  1) Dodanie samochodu do bazy       |)" << endl;
+        cout << R"(|  2) Usunięcie samochodu z bazy      |)" << endl;
+        cout << R"(|  3) Usunięcie modelu z bazy         |)" << endl;
+        cout << R"(|  4) Dodanie pracownika              |)" << endl;
+        cout << R"(|  5) Powrót do głównego menu         |)" << endl;
+        cout << R"(|_____________________________________|)" << endl;
+                
+        cout << endl << " Twój wybór: ";
         int choice = GetInput();
 
         switch (choice)
@@ -132,7 +135,57 @@ void menu_kierownik() {
 }
 
 void menu_serwisant() {
+    cout << R"( _____________________________________ )" << endl;
+    cout << R"(|   ,-----.                           |)" << endl;
+    cout << R"(|  / ,---. \                          |)" << endl;
+    cout << R"(| / /     \ \          Operacje       |)" << endl;
+    cout << R"(| \ \     / /          Serwisowe      |)" << endl;
+    cout << R"(|  \ `---' /                          |)" << endl;
+    cout << R"(|   `-----'                           |)" << endl;
+    cout << R"(|_____________________________________|)" << endl;
 
+    string kod;
+    cout << endl << "Podaj kod dostepu: ";
+    cin >> kod;
+
+    if (kod == "qwe123") {
+    repeat:
+        system("CLS");
+        cout << R"( _____________________________________ )" << endl;
+        cout << R"(|   ,-----.                           |)" << endl;
+        cout << R"(|  / ,---. \                          |)" << endl;
+        cout << R"(| / /     \ \          Operacje       |)" << endl;
+        cout << R"(| \ \     / /          Serwisowe      |)" << endl;
+        cout << R"(|  \ `---' /                          |)" << endl;
+        cout << R"(|   `-----'                           |)" << endl;
+        cout << R"(|_____________________________________|)" << endl;
+        cout << R"( _____________________________________ )" << endl;
+        cout << R"(|  Menu Serwisanta:                   |)" << endl;
+        cout << R"(|                                     |)" << endl;
+        cout << R"(|  1) Wydanie samochodu               |)" << endl;
+        cout << R"(|  2) Raport serwisu samochodu        |)" << endl;
+        cout << R"(|  3) Usunięcie modelu z bazy         |)" << endl;
+        cout << R"(|  4) Powrot do glownego menu         |)" << endl;
+        cout << R"(|_____________________________________|)" << endl;
+        
+        cout << endl << " Twój wybór: ";
+        int choice = GetInput();
+
+        switch (choice) {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            menu();
+            break;
+        default:
+            goto repeat;
+            break;
+        }
+    }
 }
 
 int main()
