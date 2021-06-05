@@ -140,8 +140,10 @@ int main()
     setlocale(LC_ALL, "pl_PL");
 
     Model::CreateObjs();
+    Samochod::CreateObj();
     Klient::CreateObj();
     Pracownik::CreateObj();
+    Wypozyczenie::CreateObj();
     
     menu();
 }
