@@ -23,7 +23,7 @@ string Klient::GetName() {
     return imie;
 }
 
-int Klient::FindKlient(string pesel) {
+int Klient::Find(string pesel) {
     for (int i = 0; i < klient.size(); i++) {
         if (pesel == klient[i].pesel) {
             return i;
@@ -44,4 +44,18 @@ void Klient::CreateObj() {
         }
         file.close();
     }
+}
+
+void Klient::Add(string imie, string nazwisko, string pesel, string nr_tel) {
+    ofstream file;
+    file.open("SaveKlient", ios::app);
+
+    if (file.is_open()) {
+        file << imie << " " << nazwisko << " " << pesel << " " << nr_tel << endl;
+
+        file.close();
+    }
+
+    klient.clear();
+    Klient::CreateObj();
 }

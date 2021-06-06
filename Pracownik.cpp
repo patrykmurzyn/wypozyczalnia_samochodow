@@ -35,11 +35,26 @@ void Pracownik::CreateObj() {
     }
 }
 
-int Pracownik::FindPracownik(string pesel) {
+int Pracownik::Find(string pesel) {
     for (int i = 0; i < pracownik.size(); i++) {
         if (pesel == pracownik[i].pesel) {
             return i;
         }
     }
     return -1;
+}
+
+void Pracownik::Add(string imie, string nazwisko, string pesel, string nr_tel, string stanowisko) {
+    ofstream file;
+    file.open("SavePracownik", ios::app);
+
+    if (file.is_open()) {
+        file << imie << " " << nazwisko << " " << pesel << " "
+            << nr_tel << " " << stanowisko << endl;
+
+        file.close();
+    }
+
+    pracownik.clear();
+    CreateObj();
 }

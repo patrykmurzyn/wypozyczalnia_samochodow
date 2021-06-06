@@ -32,7 +32,11 @@ public:
 
     static void CreateObj();
 
-    static int FindSamochod(string nr_rej);
+    static int Find(string nr_rej);
+
+    static void Add(Model, string, string, int, int);
+
+    static void Remove(int);
 
     friend class Model;
 };

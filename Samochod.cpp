@@ -68,15 +68,57 @@ void Samochod::RemoveObjModel(int index) {
         file_o.close();
 
         model.clear();
-        Model::CreateObjs();
+        Model::CreateObj();
     }
 }
 
-int Samochod::FindSamochod(string nr_rej) {
+int Samochod::Find(string nr_rej) {
     for (int i = 0; i < samochod.size(); i++) {
         if (nr_rej == samochod[i].nr_rejestracyjny) {
             return i;
         }
     }
     return -1;
+}
+
+void Samochod::Add(Model m, string nr_rej, string kolor, int przebieg, int rocznik) {
+    ofstream file;
+    file.open("SaveSamochod", ios::app);
+
+    if (file.is_open()) {
+        file << m.wersja << " " << nr_rej << " "
+            << kolor << " " << przebieg << " " << rocznik << endl;
+
+        file.close();
+    }
+
+    samochod.clear();
+    CreateObj();
+}
+
+void Samochod::Remove(int index) {
+    fstream file_i;
+    file_i.open("SaveSamochod", ios::in);
+
+    string line;
+    vector<string> vec;
+
+    while (getline(file_i, line)) {
+        vec.push_back(line);
+    }
+    file_i.close();
+
+    fstream file_o;
+    file_o.open("SaveSamochod", ios::out);
+
+    for (int i = 0; i < vec.size() - 1; i++) {
+        if (i != index) {
+            file_o << vec[i] << endl;
+        }
+    }
+
+    file_o.close();
+
+    samochod.clear();
+    CreateObj();
 }

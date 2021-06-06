@@ -51,12 +51,33 @@ void Wypozyczenie::CreateObj() {
             temp.wyp_do.minuty >> k >> s >> p >> temp.wyp_przebieg >> temp.zwr_przebieg >>
             temp.status >> temp.nr_zamowienia) {
 
-            temp.k = klient[Klient::FindKlient(k)];
-            temp.s = samochod[Samochod::FindSamochod(s)];
-            temp.p = pracownik[Pracownik::FindPracownik(p)];
+            temp.k = klient[Klient::Find(k)];
+            temp.s = samochod[Samochod::Find(s)];
+            temp.p = pracownik[Pracownik::Find(p)];
 
             wypozyczenie.push_back(temp);
         }
         file.close();
     }
+}
+
+void Wypozyczenie::Add(Date wod, Date wdo, string k, string s, string p,
+    int wyp_przebieg, int zwr_przebieg, int status, int nr_zam) {
+
+    ofstream file;
+    file.open("SaveWypozyczenie", ios::app);
+
+    if (file.is_open()) {
+        file << wod.rok << " " << wod.miesiac << " " << wod.dzien <<
+            " " << wod.godzina << " " << wod.minuty << " " << wdo.rok <<
+            " " << wdo.miesiac << " " << wdo.dzien <<
+            " " << wdo.godzina << " " << wdo.minuty << " " <<
+            k << " " << s << " " << p << " " << wyp_przebieg << " " <<
+            zwr_przebieg << " " << status << " " << nr_zam << endl;
+
+        file.close();
+    }
+
+    wypozyczenie.clear();
+    Wypozyczenie::CreateObj();
 }

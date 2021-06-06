@@ -34,6 +34,9 @@ public:
     Wypozyczenie();
 
     static void CreateObj();
+
+    static void Add(Date, Date, string, string, string,
+        int, int, int, int);
 };
 
 #endif

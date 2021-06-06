@@ -30,11 +30,11 @@ Model::Model() {
 
 }
 
-void Model::CreateObjs() {
+void Model::CreateObj() {
     Model temp;
 
     fstream file;
-    file.open("SaveModel.txt", ios::in);
+    file.open("SaveModel", ios::in);
 
     if (file.is_open()) {
         while (file >> temp.marka >> temp.wersja >> temp.moc_silnika >>
@@ -70,44 +70,64 @@ void Model::ReadAllVersion() {
     }
 }
 
-string Model::GetMarka() {
-    return marka;
+void Model::Add(string marka, string wersja, int moc_silnika,
+    string skrzynia_biegow, string paliwo, float sr_spalanie,
+    int ilosc_drzwi, int ilosc_miejsc, float poj_bagaznika,
+    bool klimatyzacja, float koszt_godzina) {
+
+    ofstream file;
+    file.open("SaveModel", ios::app);
+
+    if (file.is_open()) {
+        file << marka << " " << wersja << " "
+            << moc_silnika << " " << skrzynia_biegow << " "
+            << paliwo << " " << sr_spalanie << " " << ilosc_drzwi
+            << " " << ilosc_miejsc << " " << poj_bagaznika << " "
+            << klimatyzacja << " " << koszt_godzina << endl;
+
+        file.close();
+    }
+
+    model.clear();
+    Model::CreateObj();
 }
 
-string Model::GetWersja() {
-    return wersja;
-}
+void Model::Remove(int index) {
+    bool IsSamochod = false;
 
-int Model::GetMocSilnika() {
-    return moc_silnika;
-}
+    for (int i = 0; i < samochod.size(); i++) {
+        if (model[index].wersja == samochod[i].SamModel.wersja) {
+            IsSamochod = true;
+        }
+    }
+    if (IsSamochod) {
+        cout << "Usun samochod o tym modelu przed ta operacja!" << endl;
+        system("pause");
+    }
+    else {
+        fstream file_i;
+        file_i.open("SaveModel", ios::in);
 
-string Model::GetSkrzyniaBiegow() {
-    return skrzynia_biegow;
-}
+        string line;
+        vector<string> vec;
 
-string Model::GetPaliwo() {
-    return paliwo;
-}
+        while (getline(file_i, line)) {
+            vec.push_back(line);
+        }
+        file_i.close();
 
-float Model::GetSrSpalanie() {
-    return sr_spalanie;
-}
+        fstream file_o;
+        file_o.open("SaveModel", ios::out);
 
-int Model::GetIloscDzrwi() {
-    return ilosc_drzwi;
-}
+        for (int i = 0; i < vec.size(); i++) {
+            if (i != index) {
+                file_o << vec[i] << endl;
+            }
+        }
 
-int Model::GetIloscMiejsc() {
-    return ilosc_miejsc;
-} 
+        file_o.close();
 
-float Model::GetPojBagaznika() {
-    return poj_bagaznika;
-}
-bool Model::GetKlimatyzacja() {
-    return klimatyzacja;
-}
-float Model::GetKosztGodzina() {
-    return koszt_godzina;
+        model.clear();
+        CreateObj();
+    }
 }

@@ -23,25 +23,19 @@ public:
 
     Model();
 
-    static void CreateObjs();
+    static void CreateObj();
 
     static void ReadAll();
 
     static void ReadAllVersion();
 
+    static void Add(string, string, int, string, string, float,
+        int, int, float, bool, float);
+
+    static void Remove(int);
+
     friend class Samochod;
 
-    string GetMarka();
-    string GetWersja();
-    int GetMocSilnika();
-    string GetSkrzyniaBiegow();
-    string GetPaliwo();
-    float GetSrSpalanie();
-    int GetIloscDzrwi();
-    int GetIloscMiejsc();
-    float GetPojBagaznika(); 
-    bool GetKlimatyzacja();
-    float GetKosztGodzina();
 };
 
 #endif

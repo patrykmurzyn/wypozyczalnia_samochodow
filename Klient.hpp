@@ -15,7 +15,9 @@ public:
 
     static void CreateObj();
 
-    static int FindKlient(string pesel);
+    static void Add(string, string, string, string);
+
+    static int Find(string pesel);
 };
 
 #endif

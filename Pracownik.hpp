@@ -16,7 +16,9 @@ public:
 
     static void CreateObj();
 
-    static int FindPracownik(string pesel);
+    static void Add(string, string, string, string, string);
+
+    static int Find(string pesel);
 };
 
 #endif
