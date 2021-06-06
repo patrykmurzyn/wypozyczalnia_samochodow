@@ -17,7 +17,7 @@ int GetInput() {
     int choice;
     while (!(cin >> choice))
     {
-        cout << endl << " Podano nieprawidłowe dane!. Podaj ponownie twój wybór: ";
+        cout << endl << " Podano nieprawidłowe dane! Podaj ponownie twój wybór: ";
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
@@ -190,7 +190,7 @@ void menu_serwisant() {
         cout << R"( _____________________________________ )" << endl;
         cout << R"(|  Menu Serwisanta:                   |)" << endl;
         cout << R"(|                                     |)" << endl;
-        cout << R"(|  1) Wydanie samochodu               |)" << endl;
+        cout << R"(|  1) Przygotowanie samochodu         |)" << endl;
         cout << R"(|  2) Raport serwisu samochodu        |)" << endl;
         cout << R"(|  3) Usunięcie modelu z bazy         |)" << endl;
         cout << R"(|  4) Powrot do glownego menu         |)" << endl;
@@ -240,6 +240,33 @@ int main()
     Pracownik::CreateObj();
     Wypozyczenie::CreateObj();
     
-    menu();
+    //menu();
+    Model BMW_serii_1("BMW", "118i M Sport", 140, "automatyczna", "benzyna", 5.9, 5, 5, 380, true, 230);
+    Model Yaris("Toyota", "Yaris", 125, "manualna", "benzyna", 8.5, 5, 5, 255, true, 120);
+    Model Vivaro("Opel", "Vivaro", 144, "automatyczna", "Diesel", 13.2, 5, 9, 1400, true, 490);
+    Model Mondeo("Ford", "Mondeo", 140, "manualna", "Diesel", 6.0, 5, 5, 550, true, 150);
+    //Mondeo.CreateObjs();
+    string linia;
+    fstream plik;
+    Model temp = Mondeo;
+
+    fstream file;
+    
+    file.open("SaveModel.txt", ios::out | ios::app);
+
+    if (file.is_open()) {
+        file << temp.GetMarka() << " " << temp.GetWersja() << " " << temp.GetMocSilnika() << " " << temp.GetSkrzyniaBiegow() << " " << temp.GetPaliwo() << " "
+            << temp.GetSrSpalanie() << " " << temp.GetIloscDzrwi() << " " << temp.GetIloscMiejsc() << " " << temp.GetPojBagaznika() << " "
+            << temp.GetKlimatyzacja() << " " << temp.GetKosztGodzina() << endl;
+        {
+
+            model.push_back(temp);
+        }
+        file.close();
+    }
+    //BMW_serii_1.RemoveModel("SaveModel", 3);
+    //BMW_serii_1.ReadVersion("SaveModel");
+    //Samochod samochod1(BMW_serii_1, "KNS 83674", "czarny", 52350, 2019);
+    //bmw.dodaj();
     system("pause>0");
 }

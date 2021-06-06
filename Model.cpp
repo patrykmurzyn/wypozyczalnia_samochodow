@@ -34,7 +34,7 @@ void Model::CreateObjs() {
     Model temp;
 
     fstream file;
-    file.open("SaveModel", ios::in);
+    file.open("SaveModel.txt", ios::in);
 
     if (file.is_open()) {
         while (file >> temp.marka >> temp.wersja >> temp.moc_silnika >>
@@ -68,4 +68,46 @@ void Model::ReadAllVersion() {
     for (int i = 0; i < model.size(); i++) {
         cout << i + 1 << ") " << model[i].marka << endl;
     }
+}
+
+string Model::GetMarka() {
+    return marka;
+}
+
+string Model::GetWersja() {
+    return wersja;
+}
+
+int Model::GetMocSilnika() {
+    return moc_silnika;
+}
+
+string Model::GetSkrzyniaBiegow() {
+    return skrzynia_biegow;
+}
+
+string Model::GetPaliwo() {
+    return paliwo;
+}
+
+float Model::GetSrSpalanie() {
+    return sr_spalanie;
+}
+
+int Model::GetIloscDzrwi() {
+    return ilosc_drzwi;
+}
+
+int Model::GetIloscMiejsc() {
+    return ilosc_miejsc;
+} 
+
+float Model::GetPojBagaznika() {
+    return poj_bagaznika;
+}
+bool Model::GetKlimatyzacja() {
+    return klimatyzacja;
+}
+float Model::GetKosztGodzina() {
+    return koszt_godzina;
 }

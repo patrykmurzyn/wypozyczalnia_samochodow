@@ -31,6 +31,17 @@ public:
 
     friend class Samochod;
 
+    string GetMarka();
+    string GetWersja();
+    int GetMocSilnika();
+    string GetSkrzyniaBiegow();
+    string GetPaliwo();
+    float GetSrSpalanie();
+    int GetIloscDzrwi();
+    int GetIloscMiejsc();
+    float GetPojBagaznika(); 
+    bool GetKlimatyzacja();
+    float GetKosztGodzina();
 };
 
 #endif
