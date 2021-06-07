@@ -193,11 +193,12 @@ void menu_kierownik() {
             cout << "Twoj wybor: ";
             cin >> choice;
             if (choice >= 1 && choice <= samochod.size()) {
-                //RemoveObjSamochod(wybor - 1);
+                Samochod::Remove(choice - 1);
                 goto repeat;
             }
             else if (choice == samochod.size() + 1) {
-                goto repeat;
+                system("CLS");
+                menu_kierownik();
             }
             else {
                 goto repeat;
@@ -214,11 +215,30 @@ void menu_kierownik() {
                 goto repeat;
             }
             else if (choice == model.size() + 1) {
-                goto repeat;
+                system("CLS");
+                menu_kierownik();
             }
             else {
                 goto repeat;
             }
+            break;
+        case 4:
+        {
+            cout << endl << "Dodanie pracownika do bazy:" << endl;
+            string imie, nazwisko, pesel, nr_tel, stanowisko;
+            cout << "Podaj imie: ";
+            cin >> imie;
+            cout << "Podaj nazwisko: ";
+            cin >> nazwisko;
+            cout << "Podaj pesel: ";
+            cin >> pesel;
+            cout << "Podaj numer telefonu: ";
+            cin >> nr_tel;
+            cout << "Podaj stanowisko: ";
+            cin >> stanowisko;
+
+            Pracownik::Add(imie, nazwisko, pesel, nr_tel, stanowisko); }
+            goto repeat;
             break;
         case 5:
             system("CLS");
