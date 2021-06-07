@@ -122,3 +122,13 @@ void Samochod::Remove(int index) {
     samochod.clear();
     CreateObj();
 }
+
+void Samochod::ReadAll() {
+    for (int i = 0; i < samochod.size(); i++) {
+        cout << i + 1 << ") Model: " << samochod[i].SamModel.wersja << endl;
+        cout << "Numer rejestracyjny: " << samochod[i].nr_rejestracyjny << endl;
+        cout << "Kolor: " << samochod[i].kolor << endl;
+        cout << "Przebieg: " << samochod[i].przebieg << endl;
+        cout << "Rocznik: " << samochod[i].rocznik << endl << endl;
+    }
+}

@@ -38,6 +38,8 @@ public:
 
     static void Remove(int);
 
+    static void ReadAll();
+
     friend class Model;
 };
 
