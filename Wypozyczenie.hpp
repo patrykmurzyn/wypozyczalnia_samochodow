@@ -15,6 +15,7 @@ struct Date {
     string minuty;
 
     Date(string, string, string, string, string);
+    //Date();
 };
 
 class Wypozyczenie {
@@ -37,6 +38,8 @@ public:
 
     static void Add(Date, Date, string, string, string,
         int, int, int, int);
+
+    int GetNo();
 };
 
 #endif

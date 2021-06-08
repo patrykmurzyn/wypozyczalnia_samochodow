@@ -132,3 +132,7 @@ void Samochod::ReadAll() {
         cout << "Rocznik: " << samochod[i].rocznik << endl << endl;
     }
 }
+
+string Samochod::GetNrRej(int index) {
+    return samochod[index].nr_rejestracyjny;
+}

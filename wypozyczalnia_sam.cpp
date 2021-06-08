@@ -36,6 +36,15 @@ void logo_operacja_kierownika() {
     cout << R"(|_____________________________________|)" << endl;
 }
 
+void logo_glowne() {
+    cout << R"( _____________________________________ )" << endl;
+    cout << R"(|     ____                            |)" << endl;
+    cout << R"(|  __/  |_\_          Wypożyczalnia   |)" << endl;
+    cout << R"(| |  _     _``-.      Samochodów v0.2 |)" << endl;
+    cout << R"(| '-(_)---(_)--'                      |)" << endl;
+    cout << R"(|_____________________________________|)" << endl;
+}
+
 void menu() {
 repeat:
     system("CLS");
@@ -62,7 +71,88 @@ repeat:
 
     switch (choice) {
     case 1:
+    {
+        {
+            system("CLS");
+            logo_glowne();
+            cout << endl << " Rezerwacja samochodu" << endl << endl;
+
+            Date wod("", "", "", "", "");
+            Date wdo("", "", "", "", "");
+            string k, s, p;
+            int wyp_przebieg, zwr_przebieg, status, nr_zam;
+
+            cout << " Podaj rok wypozyczenia: ";
+            cin >> wod.rok;
+
+            cout << " Podaj miesiac wypozyczenia: ";
+            cin >> wod.miesiac;
+
+            cout << " Podaj dzien wypozyczenia: ";
+            cin >> wod.dzien;
+
+            cout << " Podaj godzine wypozyczenia: ";
+            cin >> wod.godzina;
+
+            cout << " Podaj minuty wypozyczenia: ";
+            cin >> wod.minuty;
+
+            cout << " Podaj rok zwrotu: ";
+            cin >> wdo.rok;
+
+            cout << " Podaj miesiac zwrotu: ";
+            cin >> wdo.miesiac;
+
+            cout << " Podaj dzien zwrotu: ";
+            cin >> wdo.dzien;
+
+            cout << " Podaj godzine zwrotu: ";
+            cin >> wdo.godzina;
+
+            cout << " Podaj minuty zwrotu: ";
+            cin >> wdo.minuty;
+
+            cout << " Podaj pesel klienta: ";
+            cin >> k;
+
+            if (Klient::Find(k) == -1) {
+                cout << " Nie ma klienta w bazie. Prosze wprowadzic dane:" << endl;
+
+                string imie, nazwisko, nr_tel;
+
+                cout << " Podaj imie: ";
+                cin >> imie;
+
+                cout << " Podaj nazwisko: ";
+                cin >> nazwisko;
+
+                cout << " Podaj nr telefonu: ";
+                cin >> nr_tel;
+
+                Klient::Add(imie, nazwisko, k, nr_tel);
+            }
+
+            cout << endl << " Prosze wybrac samochod: " << endl;
+            Samochod::ReadAll();
+
+            cout << " Twoj wybor: ";
+            cin >> choice;
+
+            s = Samochod::GetNrRej(choice - 1);
+
+            cout << " Podaj pesel pracownika: ";
+            cin >> p;
+
+            cout << " Podaj aktualny przebieg samochodu: ";
+            cin >> wyp_przebieg;
+
+            nr_zam = wypozyczenie[wypozyczenie.size() - 1].GetNo() + 1;
+
+            Wypozyczenie::Add(wod, wdo, k, s, p, wyp_przebieg, 0, 0, nr_zam);
+            goto repeat;
+        }
         break;
+    }
     case 2:
         break;
     case 3:
@@ -70,7 +160,28 @@ repeat:
     case 4:
         break;
     case 5:
+    {
+        system("CLS");
+        logo_glowne();
+        cout << endl << " Opcja - przegladanie samochodów" << endl << endl;
+        Samochod::ReadAll();
+        cout << samochod.size() + 1 << ") Powrot do menu" << endl;
+
+        cout << endl << " Twój wybór: ";
+        int choice = GetInput();
+
+        if (choice >= 1 && choice <= samochod.size()) {
+            goto repeat;
+        }
+        else if (choice == samochod.size() + 1) {
+            system("CLS");
+            menu();
+        }
+        else {
+            goto repeat;
+        }
         break;
+    }
     case 6:
         system("CLS");
         menu_kierownik();
@@ -125,18 +236,23 @@ void menu_kierownik() {
 
             cout << endl << " Twój wybór: ";
             int choice = GetInput();
+
             if (choice >= 1 && choice <= model.size()) {
                 Model m = model[choice - 1];
                 string nr_rej, kolor;
                 int przebieg, rocznik;
 
                 cout << " Wartosci nalezy wprowadzac bez uzycia spacji!" << endl;
+
                 cout << " Podaj numer rejestracyjny: ";
                 cin >> nr_rej;
+
                 cout << " Podaj kolor: ";
                 cin >> kolor;
+
                 cout << " Podaj przebieg: ";
                 cin >> przebieg;
+
                 cout << " Podaj rocznik: ";
                 cin >> rocznik;
 
@@ -150,26 +266,37 @@ void menu_kierownik() {
                 float sr_spalanie, poj_bagaznika, koszt_godzina;
                 bool klimatyzycja;
                 cout << " Wartosci nalezy wprowadzac bez uzycia spacji!" << endl;
+
                 cout << " Podaj marke: ";
                 cin >> marka;
+
                 cout << " Podaj wersje: ";
                 cin >> wersja;
+
                 cout << " Podaj rodzaj skrzyni biegow: ";
                 cin >> skrzynia_biegow;
+
                 cout << " Podaj rodzaj paliwa: ";
                 cin >> paliwo;
+
                 cout << " Podaj moc silnika: ";
                 cin >> moc_silnika;
+
                 cout << " Podaj ilosc drzwi: ";
                 cin >> ilosc_drzwi;
+
                 cout << " Podaj ilosc miejsc: ";
                 cin >> ilosc_miejsc;
+
                 cout << " Podaj srednie spalanie: ";
                 cin >> sr_spalanie;
+
                 cout << " Podaj pojemnosc bagaznika: ";
                 cin >> poj_bagaznika;
+
                 cout << " Podaj koszt godzinny: ";
                 cin >> koszt_godzina;
+
                 cout << " Czy posiada klimatyzacje? [0/ 1]: ";
                 cin >> klimatyzycja;
 
@@ -187,11 +314,13 @@ void menu_kierownik() {
             break;
         }
         case 2:
-            cout << endl << "Wybierz samochod do usuniecia: " << endl << endl;
+            cout << endl << " Wybierz samochod do usuniecia: " << endl << endl;
             Samochod::ReadAll();
             cout << samochod.size() + 1 << ") Powrot do menu" << endl;
-            cout << "Twoj wybor: ";
+
+            cout << " Twoj wybor: ";
             cin >> choice;
+
             if (choice >= 1 && choice <= samochod.size()) {
                 Samochod::Remove(choice - 1);
                 goto repeat;
@@ -205,11 +334,13 @@ void menu_kierownik() {
             }
             break;
         case 3:
-            cout << endl << "Wybierz model do usuniecia: " << endl << endl;
+            cout << endl << " Wybierz model do usuniecia: " << endl << endl;
             Model::ReadAll();
             cout << model.size() + 1 << ") Powrot do menu" << endl;
-            cout << "Twoj wybor: ";
+
+            cout << " Twoj wybor: ";
             choice = GetInput();
+
             if (choice >= 1 && choice <= model.size()) {
                 Model::Remove(choice - 1);
                 goto repeat;
@@ -224,17 +355,23 @@ void menu_kierownik() {
             break;
         case 4:
         {
-            cout << endl << "Dodanie pracownika do bazy:" << endl;
+            cout << endl << " Dodanie pracownika do bazy:" << endl;
+
             string imie, nazwisko, pesel, nr_tel, stanowisko;
-            cout << "Podaj imie: ";
+
+            cout << " Podaj imie: ";
             cin >> imie;
-            cout << "Podaj nazwisko: ";
+
+            cout << " Podaj nazwisko: ";
             cin >> nazwisko;
-            cout << "Podaj pesel: ";
+
+            cout << " Podaj pesel: ";
             cin >> pesel;
-            cout << "Podaj numer telefonu: ";
+
+            cout << " Podaj numer telefonu: ";
             cin >> nr_tel;
-            cout << "Podaj stanowisko: ";
+
+            cout << " Podaj stanowisko: ";
             cin >> stanowisko;
 
             Pracownik::Add(imie, nazwisko, pesel, nr_tel, stanowisko); }
@@ -277,7 +414,7 @@ void menu_serwisant() {
     cout << R"(|_____________________________________|)" << endl;
 
     string kod;
-    cout << endl << "Podaj kod dostepu: ";
+    cout << endl << " Podaj kod dostepu: ";
     cin >> kod;
 
     if (kod == "qwe123") {
@@ -349,7 +486,5 @@ int main()
     Model Yaris("Toyota", "Yaris", 125, "manualna", "benzyna", 8.5, 5, 5, 255, true, 120);
     Model Vivaro("Opel", "Vivaro", 144, "automatyczna", "Diesel", 13.2, 5, 9, 1400, true, 490);
     Model Mondeo("Ford", "Mondeo", 140, "manualna", "Diesel", 6.0, 5, 5, 550, true, 150);
-    
-    Model::ReadAll();
     system("pause>0");
 }

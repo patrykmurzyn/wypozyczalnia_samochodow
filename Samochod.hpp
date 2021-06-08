@@ -40,6 +40,8 @@ public:
 
     static void ReadAll();
 
+    static string GetNrRej(int);
+
     friend class Model;
 };
 

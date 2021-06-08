@@ -17,6 +17,10 @@ Date::Date(string r = "", string m = "", string d = "", string g = "", string mi
     minuty = min;
 }
 
+//Date::Date() {
+
+//}
+
 Wypozyczenie::Wypozyczenie(Date wyp_od, Date wyp_do, Klient k,
     Samochod s, Pracownik p, int wyp_przebieg, int zwr_przebieg, int status, int nr_zamowienia)
 {
@@ -80,4 +84,8 @@ void Wypozyczenie::Add(Date wod, Date wdo, string k, string s, string p,
 
     wypozyczenie.clear();
     Wypozyczenie::CreateObj();
+}
+
+int Wypozyczenie::GetNo() {
+    return nr_zamowienia;
 }
