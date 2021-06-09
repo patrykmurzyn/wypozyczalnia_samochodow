@@ -80,7 +80,7 @@ repeat:
             Date wod("", "", "", "", "");
             Date wdo("", "", "", "", "");
             string k, s, p;
-            int wyp_przebieg, zwr_przebieg, status, nr_zam;
+            int wyp_przebieg, zwr_przebieg, nr_zam;
 
             cout << " Podaj rok wypozyczenia: ";
             cin >> wod.rok;
@@ -148,7 +148,7 @@ repeat:
 
             nr_zam = wypozyczenie[wypozyczenie.size() - 1].GetNo() + 1;
 
-            Wypozyczenie::Add(wod, wdo, k, s, p, wyp_przebieg, 0, 0, nr_zam);
+            Wypozyczenie::Add(wod, wdo, k, s, p, wyp_przebieg, 0, 1, nr_zam);
             goto repeat;
         }
         break;
@@ -158,26 +158,103 @@ repeat:
         {
             system("CLS");
             logo_glowne();
-            cout << endl << " Anulowanie rezerwacji: " << endl << endl;
-
-            int nr_zam;
-
-            cout << " Podaj nr zamowienia: ";
-            cin >> nr_zam;
-            if (Wypozyczenie::Find(nr_zam)!=-1)
-            {
-                Wypozyczenie::Read(nr_zam);
+            cout << "Wybierz rezerwacje do anulowania: " << endl;
+            int j = 0;
+            vector<int> num;
+            for (int i = 0; i < wypozyczenie.size(); i++) {
+                if (wypozyczenie[i].GetStatus() == 1) {
+                    j++;
+                    cout << j << ") ";
+                    wypozyczenie[i].Read();
+                    num.push_back(i);
+                }
+            }
+            if (num.size() == 0) {
+                cout << "Brak zarezerwowanych samochodów." << endl;
+                system("pause");
             }
             else {
-                cout << " Nie ma tekiego numeru rezerwacji.";
+                cout << "Twoj wybor: ";
+                int choice = GetInput();
+
+                if (choice >= 1 && choice <= num.size()) {
+                    Wypozyczenie::Cancel(num[choice - 1]);
+                }
+                else {
+                    goto repeat;
+                }
             }
+            
         }
-        break;
+        menu();
     }
     case 3:
-        break;
+    {
+        system("CLS");
+        logo_glowne();
+        cout << "Wybierz samochod do wydania: " << endl;
+        int j = 0;
+        vector<int> num;
+        for (int i = 0; i < wypozyczenie.size(); i++) {
+            if (wypozyczenie[i].GetStatus() == 1) {
+                j++;
+                cout << j << ") ";
+                wypozyczenie[i].Read();
+                num.push_back(i);
+            }
+        }
+        if (num.size() == 0) {
+            cout << "Brak zarezerwowanych samochodów." << endl;
+            cout << "Należy zarezerwować samochód." << endl;
+            system("pause");
+        }
+        else {
+            cout << "Twoj wybor: ";
+            int choice = GetInput();
+
+            if (choice >= 1 && choice <= num.size()) {
+                Wypozyczenie::Release(num[choice - 1]);
+            }
+            else {
+                goto repeat;
+            }
+        }
+
+    }
+    menu();
     case 4:
-        break;
+    {
+        system("CLS");
+        logo_glowne();
+        cout << "Wybierz zwracany samochód: " << endl;
+        int j = 0;
+        vector<int> num;
+        for (int i = 0; i < wypozyczenie.size(); i++) {
+            if (wypozyczenie[i].GetStatus() == 2) {
+                j++;
+                cout << j << ") ";
+                wypozyczenie[i].Read();
+                num.push_back(i);
+            }
+        }
+        if (num.size() == 0) {
+            cout << "Brak samochodów do zwrócenia." << endl;
+            system("pause");
+        }
+        else {
+            cout << "Twoj wybor: ";
+            int choice = GetInput();
+
+            if (choice >= 1 && choice <= num.size()) {
+                Wypozyczenie::Reception(num[choice - 1]);
+            }
+            else {
+                goto repeat;
+            }
+        }
+
+    }
+    menu();
     case 5:
     {
         system("CLS");
@@ -394,8 +471,8 @@ void menu_kierownik() {
             cin >> stanowisko;
 
             Pracownik::Add(imie, nazwisko, pesel, nr_tel, stanowisko); }
-            goto repeat;
-            break;
+        goto repeat;
+        break;
         case 5:
             system("CLS");
             menu();
@@ -501,9 +578,4 @@ int main()
     Wypozyczenie::CreateObj();
 
     menu();
-    Model BMW_serii_1("BMW", "118i M Sport", 140, "automatyczna", "benzyna", 5.9, 5, 5, 380, true, 230);
-    Model Yaris("Toyota", "Yaris", 125, "manualna", "benzyna", 8.5, 5, 5, 255, true, 120);
-    Model Vivaro("Opel", "Vivaro", 144, "automatyczna", "Diesel", 13.2, 5, 9, 1400, true, 490);
-    Model Mondeo("Ford", "Mondeo", 140, "manualna", "Diesel", 6.0, 5, 5, 550, true, 150);
-    system("pause>0");
 }

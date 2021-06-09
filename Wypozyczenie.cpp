@@ -17,9 +17,9 @@ Date::Date(string r = "", string m = "", string d = "", string g = "", string mi
     minuty = min;
 }
 
-//Date::Date() {
-
-//}
+Date::operator int() {
+    return atoi(rok.c_str());
+}
 
 Wypozyczenie::Wypozyczenie(Date wyp_od, Date wyp_do, Klient k,
     Samochod s, Pracownik p, int wyp_przebieg, int zwr_przebieg, int status, int nr_zamowienia)
@@ -99,14 +99,173 @@ int Wypozyczenie::Find(int nr_zam) {
     return -1;
 }
 
-void Wypozyczenie::Read(int nr_zam) {
-    cout << " Wypozyczenie od: " << wypozyczenie[nr_zam].wyp_od.rok << "-" << wypozyczenie[nr_zam].wyp_od.miesiac <<
-        "-" << wypozyczenie[nr_zam].wyp_od.dzien << " godz: " << wypozyczenie[nr_zam].wyp_od.godzina << " : " <<
-        wypozyczenie[nr_zam].wyp_od.minuty << endl;
-    cout << " Wypozyczenie do: " << wypozyczenie[nr_zam].wyp_do.rok << "-" << wypozyczenie[nr_zam].wyp_do.miesiac <<
-        "-" << wypozyczenie[nr_zam].wyp_do.dzien << " godz: " << wypozyczenie[nr_zam].wyp_do.godzina << " : " <<
-        wypozyczenie[nr_zam].wyp_do.minuty << endl;
-    cout << " Pesel klienta: " << wypozyczenie[nr_zam].k.GetPesel() << endl;
-    cout << " Numer rejestracyjny samochodu: " << wypozyczenie[nr_zam].s.GetNrRej(nr_zam) << endl;
-    cout << " Status wypozyczenia: " << wypozyczenie[nr_zam].status << endl;
+void Wypozyczenie::Read() {
+    cout << " Wypozyczenie od: " << wyp_od.rok << "-" << wyp_od.miesiac <<
+        "-" << wyp_od.dzien << " godz: " << wyp_od.godzina << ":" <<
+        wyp_od.minuty << endl;
+    cout << " Wypozyczenie do: " << wyp_do.rok << "-" << wyp_do.miesiac <<
+        "-" <<wyp_do.dzien << " godz: " << wyp_do.godzina << ":" <<
+        wyp_do.minuty << endl;
+    cout << " Pesel klienta: " << k.GetPesel() << endl;
+    cout << " Numer rejestracyjny samochodu: " << s.GetNrRej() << endl;
+    cout << " Status wypozyczenia: " << status << endl;
+}
+
+int Wypozyczenie::GetStatus() {
+    return status;
+}
+
+void Wypozyczenie::Cancel(int index) {
+    wypozyczenie[index].status = 0;
+
+    ofstream file;
+    file.open("SaveWypozyczenie", ios::out);
+    file.close();
+
+    ofstream file_;
+    file_.open("SaveWypozyczenie", ios::app);
+
+    if (file_.is_open()) {
+        for (int i = 0; i < wypozyczenie.size(); i++) {
+            file_ << wypozyczenie[i].wyp_od.rok << " " << wypozyczenie[i].wyp_od.miesiac << " " << wypozyczenie[i].wyp_od.dzien <<
+                " " << wypozyczenie[i].wyp_od.godzina << " " << wypozyczenie[i].wyp_od.minuty << " " << wypozyczenie[i].wyp_do.rok <<
+                " " << wypozyczenie[i].wyp_do.miesiac << " " << wypozyczenie[i].wyp_do.dzien <<
+                " " << wypozyczenie[i].wyp_do.godzina << " " << wypozyczenie[i].wyp_do.minuty << " " <<
+                wypozyczenie[i].k.GetPesel() << " " << wypozyczenie[i].s.GetNrRej() << " " << wypozyczenie[i].p.GetPesel() << " " << wypozyczenie[i].wyp_przebieg << " " <<
+                wypozyczenie[i].zwr_przebieg << " " << wypozyczenie[i].status << " " << wypozyczenie[i].nr_zamowienia << endl;
+        }
+    }
+
+    file_.close();
+}
+
+void Wypozyczenie::Release(int index) {
+    wypozyczenie[index].status = 2;
+
+    ofstream file;
+    file.open("SaveWypozyczenie", ios::out);
+    file.close();
+
+    ofstream file_;
+    file_.open("SaveWypozyczenie", ios::app);
+
+    if (file_.is_open()) {
+        for (int i = 0; i < wypozyczenie.size(); i++) {
+            file_ << wypozyczenie[i].wyp_od.rok << " " << wypozyczenie[i].wyp_od.miesiac << " " << wypozyczenie[i].wyp_od.dzien <<
+                " " << wypozyczenie[i].wyp_od.godzina << " " << wypozyczenie[i].wyp_od.minuty << " " << wypozyczenie[i].wyp_do.rok <<
+                " " << wypozyczenie[i].wyp_do.miesiac << " " << wypozyczenie[i].wyp_do.dzien <<
+                " " << wypozyczenie[i].wyp_do.godzina << " " << wypozyczenie[i].wyp_do.minuty << " " <<
+                wypozyczenie[i].k.GetPesel() << " " << wypozyczenie[i].s.GetNrRej() << " " << wypozyczenie[i].p.GetPesel() << " " << wypozyczenie[i].wyp_przebieg << " " <<
+                wypozyczenie[i].zwr_przebieg << " " << wypozyczenie[i].status << " " << wypozyczenie[i].nr_zamowienia << endl;
+        }
+    }
+
+    file_.close();
+}
+
+void Wypozyczenie::Reception(int index) {
+    wypozyczenie[index].status = 3;
+
+    ofstream file;
+    file.open("SaveWypozyczenie", ios::out);
+    file.close();
+
+    ofstream file_;
+    file_.open("SaveWypozyczenie", ios::app);
+
+    if (file_.is_open()) {
+        for (int i = 0; i < wypozyczenie.size(); i++) {
+            file_ << wypozyczenie[i].wyp_od.rok << " " << wypozyczenie[i].wyp_od.miesiac << " " << wypozyczenie[i].wyp_od.dzien <<
+                " " << wypozyczenie[i].wyp_od.godzina << " " << wypozyczenie[i].wyp_od.minuty << " " << wypozyczenie[i].wyp_do.rok <<
+                " " << wypozyczenie[i].wyp_do.miesiac << " " << wypozyczenie[i].wyp_do.dzien <<
+                " " << wypozyczenie[i].wyp_do.godzina << " " << wypozyczenie[i].wyp_do.minuty << " " <<
+                wypozyczenie[i].k.GetPesel() << " " << wypozyczenie[i].s.GetNrRej() << " " << wypozyczenie[i].p.GetPesel() << " " << wypozyczenie[i].wyp_przebieg << " " <<
+                wypozyczenie[i].zwr_przebieg << " " << wypozyczenie[i].status << " " << wypozyczenie[i].nr_zamowienia << endl;
+        }
+    }
+
+    file_.close();
+}
+
+bool Wypozyczenie::CheckDate(Date wyp_od, Date wyp_do) {
+
+    int ile1 = 0, ile2 = 0;
+
+    while (wyp_od.rok == wyp_do.rok && wyp_od.miesiac == wyp_do.miesiac
+        && wyp_od.dzien == wyp_do.dzien) {
+
+        ile1++;
+
+        wyp_od.dzien = atoi(wyp_od.dzien.c_str() + 1);
+
+        if (atoi(wyp_od.dzien.c_str()) > 31) {
+            wyp_od.dzien = "1";
+            wyp_od.miesiac = atoi(wyp_od.miesiac.c_str() + 1);
+        }
+        if (atoi(wyp_od.miesiac.c_str()) > 12) {
+            wyp_od.miesiac = "1";
+            wyp_od.rok = atoi(wyp_od.rok.c_str() + 1);
+        }
+    }
+
+    for (int i = 0; i < wypozyczenie.size(); i++) {
+        if (wypozyczenie[i].status == 1 || wypozyczenie[i].status == 2) {
+            
+            Date wyp_od_zar = wypozyczenie[i].wyp_od;
+            ile2 = 0;
+
+            while (wyp_od_zar.rok == wypozyczenie[i].wyp_do.rok &&
+                wyp_od_zar.miesiac == wypozyczenie[i].wyp_do.miesiac &&
+                wyp_od_zar.dzien == wypozyczenie[i].wyp_do.dzien) {
+
+                ile2++;
+
+                wyp_od_zar.dzien = atoi(wyp_od_zar.dzien.c_str() + 1);
+
+                if (atoi(wyp_od_zar.dzien.c_str()) > 31) {
+                    wyp_od_zar.dzien = "1";
+                    wyp_od_zar.miesiac = atoi(wyp_od_zar.miesiac.c_str() + 1);
+                }
+                if (atoi(wyp_od_zar.miesiac.c_str()) > 12) {
+                    wyp_od_zar.miesiac = "1";
+                    wyp_od_zar.rok = atoi(wyp_od_zar.rok.c_str() + 1);
+                }
+            }
+
+            if (ile1 > ile2) {
+                while (wyp_od.rok == wyp_do.rok && wyp_od.miesiac == wyp_do.miesiac
+                    && wyp_od.dzien == wyp_do.dzien) {
+
+                    if (wyp_od.rok == wypozyczenie[i].wyp_od.rok &&
+                        wyp_od.miesiac == wypozyczenie[i].wyp_od.miesiac &&
+                        wyp_od.dzien == wypozyczenie[i].wyp_od.dzien) {
+                        
+                    }
+                    if (wyp_od.rok == wypozyczenie[i].wyp_do.rok &&
+                        wyp_od.miesiac == wypozyczenie[i].wyp_do.miesiac &&
+                        wyp_od.dzien == wypozyczenie[i].wyp_do.dzien) {
+
+                    }
+                }
+            }
+            else {
+                while (wyp_od_zar.rok == wypozyczenie[i].wyp_do.rok &&
+                    wyp_od_zar.miesiac == wypozyczenie[i].wyp_do.miesiac &&
+                    wyp_od_zar.dzien == wypozyczenie[i].wyp_do.dzien) {
+
+                    if (wyp_od.rok == wypozyczenie[i].wyp_od.rok &&
+                        wyp_od.miesiac == wypozyczenie[i].wyp_od.miesiac &&
+                        wyp_od.dzien == wypozyczenie[i].wyp_od.dzien) {
+
+                    }
+                    if (wyp_od.rok == wypozyczenie[i].wyp_do.rok &&
+                        wyp_od.miesiac == wypozyczenie[i].wyp_do.miesiac &&
+                        wyp_od.dzien == wypozyczenie[i].wyp_do.dzien) {
+
+                    }
+                }
+            }
+        }
+    }
+    return 0;
 }

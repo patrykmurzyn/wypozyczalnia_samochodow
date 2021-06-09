@@ -136,3 +136,7 @@ void Samochod::ReadAll() {
 string Samochod::GetNrRej(int index) {
     return samochod[index].nr_rejestracyjny;
 }
+
+string Samochod::GetNrRej() {
+    return nr_rejestracyjny;
+}

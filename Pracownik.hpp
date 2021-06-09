@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Pracownik :Osoba {
+class Pracownik :public Osoba {
     string stanowisko;
 public:
 

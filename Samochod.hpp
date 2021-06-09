@@ -42,6 +42,8 @@ public:
 
     static string GetNrRej(int);
 
+    string GetNrRej();
+
     friend class Model;
 };
 
