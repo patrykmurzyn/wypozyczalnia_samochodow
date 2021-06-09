@@ -16,3 +16,7 @@ Osoba::Osoba(string imie, string nazwisko, string pesel,
 Osoba::Osoba() {
 
 }
+
+string Osoba::GetPesel() {
+    return pesel;
+}

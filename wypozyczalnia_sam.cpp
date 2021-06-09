@@ -75,7 +75,7 @@ repeat:
         {
             system("CLS");
             logo_glowne();
-            cout << endl << " Rezerwacja samochodu" << endl << endl;
+            cout << endl << " Rezerwacja samochodu: " << endl << endl;
 
             Date wod("", "", "", "", "");
             Date wdo("", "", "", "", "");
@@ -154,7 +154,26 @@ repeat:
         break;
     }
     case 2:
+    {
+        {
+            system("CLS");
+            logo_glowne();
+            cout << endl << " Anulowanie rezerwacji: " << endl << endl;
+
+            int nr_zam;
+
+            cout << " Podaj nr zamowienia: ";
+            cin >> nr_zam;
+            if (Wypozyczenie::Find(nr_zam)!=-1)
+            {
+                Wypozyczenie::Read(nr_zam);
+            }
+            else {
+                cout << " Nie ma tekiego numeru rezerwacji.";
+            }
+        }
         break;
+    }
     case 3:
         break;
     case 4:

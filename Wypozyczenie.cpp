@@ -89,3 +89,24 @@ void Wypozyczenie::Add(Date wod, Date wdo, string k, string s, string p,
 int Wypozyczenie::GetNo() {
     return nr_zamowienia;
 }
+
+int Wypozyczenie::Find(int nr_zam) {
+    for (int i = 0; i < wypozyczenie.size(); i++) {
+        if (nr_zam == wypozyczenie[i].nr_zamowienia) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void Wypozyczenie::Read(int nr_zam) {
+    cout << " Wypozyczenie od: " << wypozyczenie[nr_zam].wyp_od.rok << "-" << wypozyczenie[nr_zam].wyp_od.miesiac <<
+        "-" << wypozyczenie[nr_zam].wyp_od.dzien << " godz: " << wypozyczenie[nr_zam].wyp_od.godzina << " : " <<
+        wypozyczenie[nr_zam].wyp_od.minuty << endl;
+    cout << " Wypozyczenie do: " << wypozyczenie[nr_zam].wyp_do.rok << "-" << wypozyczenie[nr_zam].wyp_do.miesiac <<
+        "-" << wypozyczenie[nr_zam].wyp_do.dzien << " godz: " << wypozyczenie[nr_zam].wyp_do.godzina << " : " <<
+        wypozyczenie[nr_zam].wyp_do.minuty << endl;
+    cout << " Pesel klienta: " << wypozyczenie[nr_zam].k.GetPesel() << endl;
+    cout << " Numer rejestracyjny samochodu: " << wypozyczenie[nr_zam].s.GetNrRej(nr_zam) << endl;
+    cout << " Status wypozyczenia: " << wypozyczenie[nr_zam].status << endl;
+}

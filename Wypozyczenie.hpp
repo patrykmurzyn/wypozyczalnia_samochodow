@@ -40,6 +40,9 @@ public:
         int, int, int, int);
 
     int GetNo();
+    static int Find(int);
+    static void Read(int);
 };
+
 
 #endif
