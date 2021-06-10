@@ -335,7 +335,7 @@ void menu_kierownik() {
 
             if (choice >= 1 && choice <= model.size()) {
                 Model m = model[choice - 1];
-                string nr_rej, kolor;
+                string nr_rej, kolor, rok, miesiac, dzien;
                 int przebieg, rocznik;
 
                 cout << " Wartosci nalezy wprowadzac bez uzycia spacji!" << endl;
@@ -352,7 +352,16 @@ void menu_kierownik() {
                 cout << " Podaj rocznik: ";
                 cin >> rocznik;
 
-                Samochod::Add(m, nr_rej, kolor, przebieg, rocznik);
+                cout << "Podaj datę ważności ubezpieczenia OC [rok]: ";
+                cin >> rok;
+
+                cout << "Podaj datę ważności ubezpieczenia OC [miesiąc]: ";
+                cin >> miesiac;
+
+                cout << "Podaj datę ważności ubezpieczenia OC [dzień]: ";
+                cin >> dzien;
+
+                Samochod::Add(m, nr_rej, kolor, przebieg, rocznik, DateOC(rok, miesiac, dzien));
 
                 goto repeat;
             }

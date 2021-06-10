@@ -3,6 +3,18 @@
 #include <iostream>
 #include <fstream>
 
+DateOC::DateOC() {
+    rok = "";
+    miesiac = "";
+    dzien = "";
+}
+
+DateOC::DateOC(string rok, string miesiac, string dzien) {
+    this->rok = rok;
+    this->miesiac = miesiac;
+    this->dzien = dzien;
+}
+
 bool Samochod::IsModel(int index) {
     for (int i = 0; i < samochod.size(); i++) {
         if (model[index].wersja == samochod[i].SamModel.wersja) {
@@ -29,7 +41,7 @@ void Samochod::CreateObj() {
     if (file.is_open()) {
         string nazwa;
         while (file >> nazwa >> temp.nr_rejestracyjny >> temp.kolor
-            >> temp.przebieg >> temp.rocznik) {
+            >> temp.przebieg >> temp.rocznik >> temp.OC.rok >> temp.OC.miesiac >> temp.OC.dzien) {
 
             temp.SamModel = Samochod::GetModel(nazwa);
             samochod.push_back(temp);
@@ -81,13 +93,14 @@ int Samochod::Find(string nr_rej) {
     return -1;
 }
 
-void Samochod::Add(Model m, string nr_rej, string kolor, int przebieg, int rocznik) {
+void Samochod::Add(Model m, string nr_rej, string kolor, int przebieg, int rocznik, DateOC oc) {
     ofstream file;
     file.open("SaveSamochod", ios::app);
 
     if (file.is_open()) {
         file << m.wersja << " " << nr_rej << " "
-            << kolor << " " << przebieg << " " << rocznik << endl;
+            << kolor << " " << przebieg << " " << rocznik 
+            << " " << oc.rok << " " << oc.miesiac << " " << oc.dzien << endl;
 
         file.close();
     }
@@ -139,4 +152,10 @@ string Samochod::GetNrRej(int index) {
 
 string Samochod::GetNrRej() {
     return nr_rejestracyjny;
+}
+
+void Samochod::AddOC(string r, string m, string d) {
+    OC.rok = r;
+    OC.miesiac = m;
+    OC.dzien = d;
 }
