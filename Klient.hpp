@@ -11,8 +11,6 @@ public:
 
     Klient();
 
-    string GetName();
-
     static void CreateObj();
 
     static void Add(string, string, string, string);

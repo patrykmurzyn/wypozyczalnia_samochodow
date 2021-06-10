@@ -159,3 +159,18 @@ void Samochod::AddOC(string r, string m, string d) {
     OC.miesiac = m;
     OC.dzien = d;
 }
+
+void Samochod::ReadAllOC() {
+    cout << "Numer rejestracyjny oraz termin wa¿noœci OC: " << endl;
+    
+    for (int i = 0; i < samochod.size(); i++) {
+        
+        cout << "Numer rejestracyjny: " << samochod[i].nr_rejestracyjny <<
+            ": " << samochod[i].OC.rok << "-" << samochod[i].OC.miesiac <<
+            "-" << samochod[i].OC.dzien << ", 00:00" << endl;
+    }
+}
+
+void Samochod::ChangeOC(int index) {
+
+}

@@ -17,8 +17,6 @@ public:
     Osoba();
 
     string GetPesel();
-
-    //virtual void dodaj() = 0;
 };
 
 #endif

@@ -16,11 +16,10 @@ Klient::Klient(string imie, string nazwisko, string pesel,
 }
 
 Klient::Klient() {
-
-}
-
-string Klient::GetName() {
-    return imie;
+    this->imie = "";
+    this->nazwisko = "";
+    this->pesel = "";
+    this->nr_tel = "";
 }
 
 int Klient::Find(string pesel) {

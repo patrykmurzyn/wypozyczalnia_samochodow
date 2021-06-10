@@ -18,7 +18,11 @@ Pracownik::Pracownik(string imie, string nazwisko, string pesel,
 }
 
 Pracownik::Pracownik() {
-
+    this->imie = "";
+    this->nazwisko = "";
+    this->pesel = "";
+    this->nr_tel = "";
+    this->stanowisko = "";
 }
 
 void Pracownik::CreateObj() {

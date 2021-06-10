@@ -27,7 +27,17 @@ Model::Model(string marka, string wersja, int moc_silnika,
 }
 
 Model::Model() {
-
+    this->marka = "";
+    this->wersja = "";
+    this->moc_silnika = 0;
+    this->skrzynia_biegow = "";
+    this->paliwo = "";
+    this->sr_spalanie = 0;
+    this->ilosc_drzwi = 0;
+    this->ilosc_miejsc = 0;
+    this->poj_bagaznika = 0;
+    this->klimatyzacja = 0;
+    this->koszt_godzina = 0;
 }
 
 void Model::CreateObj() {
@@ -66,7 +76,7 @@ void Model::ReadAll() {
 
 void Model::ReadAllVersion() {
     for (int i = 0; i < model.size(); i++) {
-        cout << i + 1 << ") " << model[i].marka << endl;
+        cout << i + 1 << ") " << model[i].wersja << endl;
     }
 }
 
@@ -130,46 +140,4 @@ void Model::Remove(int index) {
         model.clear();
         CreateObj();
     }
-}
-
-string Model::GetMarka() {
-    return marka;
-}
-
-string Model::GetWersja() {
-    return wersja;
-}
-
-int Model::GetMocSilnika() {
-    return moc_silnika;
-}
-
-string Model::GetSkrzyniaBiegow() {
-    return skrzynia_biegow;
-}
-
-string Model::GetPaliwo() {
-    return paliwo;
-}
-
-float Model::GetSrSpalanie() {
-    return sr_spalanie;
-}
-
-int Model::GetIloscDzrwi() {
-    return ilosc_drzwi;
-}
-
-int Model::GetIloscMiejsc() {
-    return ilosc_miejsc;
-}
-
-float Model::GetPojBagaznika() {
-    return poj_bagaznika;
-}
-bool Model::GetKlimatyzacja() {
-    return klimatyzacja;
-}
-float Model::GetKosztGodzina() {
-    return koszt_godzina;
 }

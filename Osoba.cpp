@@ -14,7 +14,10 @@ Osoba::Osoba(string imie, string nazwisko, string pesel,
 }
 
 Osoba::Osoba() {
-
+    this->imie = "";
+    this->nazwisko = "";
+    this->pesel = "";
+    this->nr_tel = "";
 }
 
 string Osoba::GetPesel() {

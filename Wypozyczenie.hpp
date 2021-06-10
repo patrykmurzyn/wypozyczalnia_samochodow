@@ -15,8 +15,6 @@ struct Date {
     string minuty;
 
     Date(string, string, string, string, string);
-    
-    operator int();
 };
 
 class Wypozyczenie {
@@ -46,10 +44,13 @@ public:
     void Read();
 
     static void Cancel(int);
-    static void Release(int);
-    static void Reception(int);
+    static void Release(int, int);
+    static void Reception(int, int);
 
-    static bool CheckDate(Date, Date);
+
+
+    //Próba zrobienia kontroli dat rezerwacji samochodów
+    //static bool CheckDate(Date, Date);
 };
 
 

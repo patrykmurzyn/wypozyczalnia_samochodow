@@ -25,7 +25,6 @@ int GetInput() {
 }
 
 void menu_kierownik();
-void menu_serwisant();
 
 void logo_operacja_kierownika() {
     cout << R"( _____________________________________ )" << endl;
@@ -40,7 +39,7 @@ void logo_glowne() {
     cout << R"( _____________________________________ )" << endl;
     cout << R"(|     ____                            |)" << endl;
     cout << R"(|  __/  |_\_          Wypożyczalnia   |)" << endl;
-    cout << R"(| |  _     _``-.      Samochodów v0.2 |)" << endl;
+    cout << R"(| |  _     _``-.      Samochodów v1.0 |)" << endl;
     cout << R"(| '-(_)---(_)--'                      |)" << endl;
     cout << R"(|_____________________________________|)" << endl;
 }
@@ -63,7 +62,7 @@ repeat:
     cout << R"(|  4) Zwrot samochodu                 |)" << endl;
     cout << R"(|  5) Przegląd samochodów             |)" << endl;
     cout << R"(|  6) Operacje kierownika             |)" << endl;
-    cout << R"(|  7) Operacje serwisanta             |)" << endl;
+    cout << R"(|  7) Przegląd OC                     |)" << endl;
     cout << R"(|_____________________________________|)" << endl;
 
     cout << endl << " Twój wybór: ";
@@ -143,12 +142,17 @@ repeat:
             cout << " Podaj pesel pracownika: ";
             cin >> p;
 
-            cout << " Podaj aktualny przebieg samochodu: ";
-            cin >> wyp_przebieg;
+            if (Pracownik::Find(p) == -1) {
+                cout << "Nie ma takiego pracownika w bazie." << endl;
+                cout << "Spróbuj ponownie!" << endl;
+
+                system("pause");
+                goto repeat;
+            }
 
             nr_zam = wypozyczenie[wypozyczenie.size() - 1].GetNo() + 1;
 
-            Wypozyczenie::Add(wod, wdo, k, s, p, wyp_przebieg, 0, 1, nr_zam);
+            Wypozyczenie::Add(wod, wdo, k, s, p, 0, 0, 1, nr_zam);
             goto repeat;
         }
         break;
@@ -212,8 +216,12 @@ repeat:
             cout << "Twoj wybor: ";
             int choice = GetInput();
 
+            int przebieg;
+            cout << "Podaj aktualny przebieg samochodu: " << endl;
+            cin >> przebieg;
+
             if (choice >= 1 && choice <= num.size()) {
-                Wypozyczenie::Release(num[choice - 1]);
+                Wypozyczenie::Release(num[choice - 1], przebieg);
             }
             else {
                 goto repeat;
@@ -245,8 +253,12 @@ repeat:
             cout << "Twoj wybor: ";
             int choice = GetInput();
 
+            int przebieg;
+            cout << "Podaj aktualny przebieg samochodu: " << endl;
+            cin >> przebieg;
+
             if (choice >= 1 && choice <= num.size()) {
-                Wypozyczenie::Reception(num[choice - 1]);
+                Wypozyczenie::Reception(num[choice - 1], przebieg);
             }
             else {
                 goto repeat;
@@ -284,8 +296,10 @@ repeat:
         break;
     case 7:
         system("CLS");
-        menu_serwisant();
-        break;
+        logo_glowne();
+        Samochod::ReadAllOC();
+        system("pause");
+        menu();
     default:
         menu();
         break;
@@ -311,7 +325,8 @@ void menu_kierownik() {
         cout << R"(|  2) Usunięcie samochodu z bazy      |)" << endl;
         cout << R"(|  3) Usunięcie modelu z bazy         |)" << endl;
         cout << R"(|  4) Dodanie pracownika              |)" << endl;
-        cout << R"(|  5) Powrót do głównego menu         |)" << endl;
+        cout << R"(|  5) Zmiana terminów OC              |)" << endl;
+        cout << R"(|  6) Powrót do głównego menu         |)" << endl;
         cout << R"(|_____________________________________|)" << endl;
 
         cout << endl << " Twój wybór: ";
@@ -483,6 +498,9 @@ void menu_kierownik() {
         goto repeat;
         break;
         case 5:
+            
+            break;
+        case 6:
             system("CLS");
             menu();
             break;
@@ -506,74 +524,6 @@ void menu_kierownik() {
         }
     }
 
-}
-
-void menu_serwisant() {
-    cout << R"( _____________________________________ )" << endl;
-    cout << R"(|   ,-----.                           |)" << endl;
-    cout << R"(|  / ,---. \                          |)" << endl;
-    cout << R"(| / /     \ \          Operacje       |)" << endl;
-    cout << R"(| \ \     / /          Serwisowe      |)" << endl;
-    cout << R"(|  \ `---' /                          |)" << endl;
-    cout << R"(|   `-----'                           |)" << endl;
-    cout << R"(|_____________________________________|)" << endl;
-
-    string kod;
-    cout << endl << " Podaj kod dostepu: ";
-    cin >> kod;
-
-    if (kod == "qwe123") {
-    repeat:
-        system("CLS");
-        cout << R"( _____________________________________ )" << endl;
-        cout << R"(|   ,-----.                           |)" << endl;
-        cout << R"(|  / ,---. \                          |)" << endl;
-        cout << R"(| / /     \ \          Operacje       |)" << endl;
-        cout << R"(| \ \     / /          Serwisowe      |)" << endl;
-        cout << R"(|  \ `---' /                          |)" << endl;
-        cout << R"(|   `-----'                           |)" << endl;
-        cout << R"(|_____________________________________|)" << endl;
-        cout << R"( _____________________________________ )" << endl;
-        cout << R"(|  Menu Serwisanta:                   |)" << endl;
-        cout << R"(|                                     |)" << endl;
-        cout << R"(|  1) Przygotowanie samochodu         |)" << endl;
-        cout << R"(|  2) Raport serwisu samochodu        |)" << endl;
-        cout << R"(|  3) Usunięcie modelu z bazy         |)" << endl;
-        cout << R"(|  4) Powrot do glownego menu         |)" << endl;
-        cout << R"(|_____________________________________|)" << endl;
-
-        cout << endl << " Twój wybór: ";
-        int choice = GetInput();
-
-        switch (choice) {
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            menu();
-            break;
-        default:
-            goto repeat;
-            break;
-        }
-    }
-    else {
-        char wybor;
-        cout << endl << " Kod dostępu nieprawidlowy. Chcesz sprobowac ponownie? [T/N]: ";
-        cin >> wybor;
-
-        if (wybor == 'T' || wybor == 't') {
-            system("CLS");
-            menu_kierownik();
-        }
-        else {
-            system("CLS");
-            menu();
-        }
-    }
 }
 
 int main()

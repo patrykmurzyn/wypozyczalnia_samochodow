@@ -17,10 +17,6 @@ Date::Date(string r = "", string m = "", string d = "", string g = "", string mi
     minuty = min;
 }
 
-Date::operator int() {
-    return atoi(rok.c_str());
-}
-
 Wypozyczenie::Wypozyczenie(Date wyp_od, Date wyp_do, Klient k,
     Samochod s, Pracownik p, int wyp_przebieg, int zwr_przebieg, int status, int nr_zamowienia)
 {
@@ -35,8 +31,17 @@ Wypozyczenie::Wypozyczenie(Date wyp_od, Date wyp_do, Klient k,
     this->status = status;
 }
 
-Wypozyczenie::Wypozyczenie() {
-
+Wypozyczenie::Wypozyczenie()
+{
+    this->wyp_do = Date();
+    this->wyp_do = Date();
+    this->k = Klient();
+    this->s = Samochod();
+    this->p = Pracownik();
+    this->wyp_przebieg = 0;
+    this->zwr_przebieg = 0;
+    this->nr_zamowienia = 0;
+    this->status = -1;
 }
 
 void Wypozyczenie::CreateObj() {
@@ -139,7 +144,7 @@ void Wypozyczenie::Cancel(int index) {
     file_.close();
 }
 
-void Wypozyczenie::Release(int index) {
+void Wypozyczenie::Release(int index, int wyp_przebieg) {
     wypozyczenie[index].status = 2;
 
     ofstream file;
@@ -155,7 +160,7 @@ void Wypozyczenie::Release(int index) {
                 " " << wypozyczenie[i].wyp_od.godzina << " " << wypozyczenie[i].wyp_od.minuty << " " << wypozyczenie[i].wyp_do.rok <<
                 " " << wypozyczenie[i].wyp_do.miesiac << " " << wypozyczenie[i].wyp_do.dzien <<
                 " " << wypozyczenie[i].wyp_do.godzina << " " << wypozyczenie[i].wyp_do.minuty << " " <<
-                wypozyczenie[i].k.GetPesel() << " " << wypozyczenie[i].s.GetNrRej() << " " << wypozyczenie[i].p.GetPesel() << " " << wypozyczenie[i].wyp_przebieg << " " <<
+                wypozyczenie[i].k.GetPesel() << " " << wypozyczenie[i].s.GetNrRej() << " " << wypozyczenie[i].p.GetPesel() << " " << wyp_przebieg << " " <<
                 wypozyczenie[i].zwr_przebieg << " " << wypozyczenie[i].status << " " << wypozyczenie[i].nr_zamowienia << endl;
         }
     }
@@ -163,7 +168,7 @@ void Wypozyczenie::Release(int index) {
     file_.close();
 }
 
-void Wypozyczenie::Reception(int index) {
+void Wypozyczenie::Reception(int index, int zwr_przebieg) {
     wypozyczenie[index].status = 3;
 
     ofstream file;
@@ -180,12 +185,16 @@ void Wypozyczenie::Reception(int index) {
                 " " << wypozyczenie[i].wyp_do.miesiac << " " << wypozyczenie[i].wyp_do.dzien <<
                 " " << wypozyczenie[i].wyp_do.godzina << " " << wypozyczenie[i].wyp_do.minuty << " " <<
                 wypozyczenie[i].k.GetPesel() << " " << wypozyczenie[i].s.GetNrRej() << " " << wypozyczenie[i].p.GetPesel() << " " << wypozyczenie[i].wyp_przebieg << " " <<
-                wypozyczenie[i].zwr_przebieg << " " << wypozyczenie[i].status << " " << wypozyczenie[i].nr_zamowienia << endl;
+                zwr_przebieg << " " << wypozyczenie[i].status << " " << wypozyczenie[i].nr_zamowienia << endl;
         }
     }
 
     file_.close();
 }
+
+
+
+/* Próba zrobienia kontroli dat rezerwacji samochodów
 
 bool Wypozyczenie::CheckDate(Date wyp_od, Date wyp_do) {
 
@@ -210,7 +219,7 @@ bool Wypozyczenie::CheckDate(Date wyp_od, Date wyp_do) {
 
     for (int i = 0; i < wypozyczenie.size(); i++) {
         if (wypozyczenie[i].status == 1 || wypozyczenie[i].status == 2) {
-            
+
             Date wyp_od_zar = wypozyczenie[i].wyp_od;
             ile2 = 0;
 
@@ -239,7 +248,7 @@ bool Wypozyczenie::CheckDate(Date wyp_od, Date wyp_do) {
                     if (wyp_od.rok == wypozyczenie[i].wyp_od.rok &&
                         wyp_od.miesiac == wypozyczenie[i].wyp_od.miesiac &&
                         wyp_od.dzien == wypozyczenie[i].wyp_od.dzien) {
-                        
+
                     }
                     if (wyp_od.rok == wypozyczenie[i].wyp_do.rok &&
                         wyp_od.miesiac == wypozyczenie[i].wyp_do.miesiac &&
@@ -269,3 +278,5 @@ bool Wypozyczenie::CheckDate(Date wyp_od, Date wyp_do) {
     }
     return 0;
 }
+
+*/

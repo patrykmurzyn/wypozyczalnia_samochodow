@@ -55,6 +55,10 @@ public:
 
     void AddOC(string, string, string);
 
+    void ChangeOC(int);
+
+    static void ReadAllOC();
+
     friend class Model;
 };
 
