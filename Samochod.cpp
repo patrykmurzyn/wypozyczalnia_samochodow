@@ -171,6 +171,25 @@ void Samochod::ReadAllOC() {
     }
 }
 
-void Samochod::ChangeOC(int index) {
+void Samochod::ChangeOC(int index, string rok, string miesiac, string dzien) {
+    samochod[index].OC.rok = rok;
+    samochod[index].OC.miesiac = miesiac;
+    samochod[index].OC.dzien = dzien;
+
+    fstream file_o;
+    file_o.open("SaveSamochod", ios::out);
+
+    ofstream file_;
+    file_.open("SaveSamochod", ios::app);
+
+    if (file_.is_open()) {
+        for (int i = 0; i < samochod.size(); i++) {
+            file_ << samochod[i].SamModel.wersja << " " << samochod[i].nr_rejestracyjny << " "
+                << samochod[i].kolor << " " << samochod[i].przebieg << " " << samochod[i].rocznik
+                << " " << samochod[i].OC.rok << " " << samochod[i].OC.miesiac << " " << samochod[i].OC.dzien << endl;
+        }
+    }
+
+    file_.close();
 
 }

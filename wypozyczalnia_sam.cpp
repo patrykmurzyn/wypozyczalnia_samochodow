@@ -498,8 +498,32 @@ void menu_kierownik() {
         goto repeat;
         break;
         case 5:
-            
-            break;
+            {
+                cout << "Aktualizacja OC - wybierz samochód:" << endl;
+                Samochod::ReadAll();
+
+                int choice = GetInput();
+                string rok, miesiac, dzien;
+
+                if (choice >= 1 && choice <= samochod.size()) {
+                    
+                    cout << "Podaj rok: ";
+                    cin >> rok;
+
+                    cout << "Podaj miesiac: ";
+                    cin >> miesiac;
+
+                    cout << "Podaj dzień: ";
+                    cin >> dzien;
+
+                    Samochod::ChangeOC(choice - 1, rok, miesiac, dzien);
+                    goto repeat;
+                }
+                else {
+                    goto repeat;
+                }
+            }
+            goto repeat;
         case 6:
             system("CLS");
             menu();

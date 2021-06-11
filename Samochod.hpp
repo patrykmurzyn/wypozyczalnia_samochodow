@@ -55,7 +55,7 @@ public:
 
     void AddOC(string, string, string);
 
-    void ChangeOC(int);
+    static void ChangeOC(int, string, string, string);
 
     static void ReadAllOC();
 
