@@ -53,6 +53,7 @@ void Samochod::CreateObj() {
 void Samochod::RemoveObjModel(int index) {
 
     if (Samochod::IsModel(index)) {
+        setlocale(LC_ALL, "pl_PL");
         cout << " Usuñ samochód o tym modelu przed t¹ operacj¹!" << endl;
         system("pause");
     }
@@ -161,7 +162,8 @@ void Samochod::AddOC(string r, string m, string d) {
 }
 
 void Samochod::ReadAllOC() {
-    cout << " Numer rejestracyjny oraz termin wa¿noœci OC: " << endl;
+    setlocale(LC_ALL, "pl_PL");
+    cout << "Numer rejestracyjny oraz termin wa¿noœci OC: " << endl;
     
     for (int i = 0; i < samochod.size(); i++) {
         

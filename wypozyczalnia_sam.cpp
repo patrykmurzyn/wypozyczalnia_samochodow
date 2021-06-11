@@ -145,6 +145,7 @@ repeat:
             if (Pracownik::Find(p) == -1) {
                 cout << " Nie ma takiego pracownika w bazie." << endl;
                 cout << " Spróbuj ponownie!" << endl;
+
                 system("pause");
                 goto repeat;
             }
@@ -161,7 +162,7 @@ repeat:
         {
             system("CLS");
             logo_glowne();
-            cout << " Wybierz rezerwacje do anulowania: " << endl << endl;
+            cout << " Wybierz rezerwacje do anulowania: " << endl;
             int j = 0;
             vector<int> num;
 
@@ -197,7 +198,7 @@ repeat:
     {
         system("CLS");
         logo_glowne();
-        cout << " Wybierz samochod do wydania: " << endl << endl;
+        cout << " Wybierz samochod do wydania: " << endl;
         int j = 0;
         vector<int> num;
 
@@ -209,7 +210,6 @@ repeat:
                 num.push_back(i);
             }
         }
-
         if (num.size() == 0) {
             cout << " Brak zarezerwowanych samochodów." << endl;
             cout << " Należy zarezerwować samochód." << endl;
@@ -237,7 +237,7 @@ repeat:
     {
         system("CLS");
         logo_glowne();
-        cout << " Wybierz zwracany samochód: " << endl << endl;
+        cout << " Wybierz zwracany samochód: " << endl;
         int j = 0;
         vector<int> num;
 
@@ -249,7 +249,6 @@ repeat:
                 num.push_back(i);
             }
         }
-
         if (num.size() == 0) {
             cout << " Brak samochodów do zwrócenia." << endl;
             system("pause");
@@ -276,7 +275,7 @@ repeat:
     {
         system("CLS");
         logo_glowne();
-        cout << endl << " Przegladanie samochodów:" << endl << endl;
+        cout << endl << "przegladanie samochodów" << endl << endl;
         Samochod::ReadAll();
         cout << samochod.size() + 1 << ") Powrot do menu" << endl;
 
@@ -481,7 +480,7 @@ void menu_kierownik() {
             break;
         case 4:
         {
-            cout << endl << " Dodanie pracownika do bazy:" << endl << endl;
+            cout << endl << " Dodanie pracownika do bazy:" << endl;
 
             string imie, nazwisko, pesel, nr_tel, stanowisko;
 

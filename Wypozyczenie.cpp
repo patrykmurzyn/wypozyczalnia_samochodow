@@ -105,15 +105,16 @@ int Wypozyczenie::Find(int nr_zam) {
 }
 
 void Wypozyczenie::Read() {
-    cout << " Wypozyczenie od: " << wyp_od.rok << "-" << wyp_od.miesiac <<
+    setlocale(LC_ALL, "pl_PL");
+    cout << " Wypo¿yczenie od: " << wyp_od.rok << "-" << wyp_od.miesiac <<
         "-" << wyp_od.dzien << " godz: " << wyp_od.godzina << ":" <<
         wyp_od.minuty << endl;
-    cout << " Wypozyczenie do: " << wyp_do.rok << "-" << wyp_do.miesiac <<
+    cout << " Wypo¿yczenie do: " << wyp_do.rok << "-" << wyp_do.miesiac <<
         "-" <<wyp_do.dzien << " godz: " << wyp_do.godzina << ":" <<
         wyp_do.minuty << endl;
     cout << " Pesel klienta: " << k.GetPesel() << endl;
     cout << " Numer rejestracyjny samochodu: " << s.GetNrRej() << endl;
-    cout << " Status wypozyczenia: " << status << endl;
+    cout << " Status wypo¿yczenia: " << status << endl;
 }
 
 int Wypozyczenie::GetStatus() {

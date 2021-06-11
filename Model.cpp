@@ -59,16 +59,17 @@ void Model::CreateObj() {
 }
 
 void Model::ReadAll() {
+    setlocale(LC_ALL, "pl_PL");
     for (int i = 0; i < model.size(); i++) {
         cout << i + 1 << ") Marka: " << model[i].marka << endl;
         cout << "Wersja: " << model[i].wersja << endl;
         cout << "Moc silnika: " << model[i].moc_silnika << endl;
-        cout << "Skrzynia biegow" << model[i].skrzynia_biegow << endl;
+        cout << "Skrzynia biegów" << model[i].skrzynia_biegow << endl;
         cout << "Paliwo:" << model[i].paliwo << endl;
-        cout << "Srednie spalanie: " << model[i].sr_spalanie << endl;
-        cout << "Ilosc drzwi: " << model[i].ilosc_drzwi << endl;
-        cout << "Ilosc miejsc: " << model[i].ilosc_miejsc << endl;
-        cout << "Pojemnosc bagaznika: " << model[i].poj_bagaznika << endl;
+        cout << "Œrednie spalanie: " << model[i].sr_spalanie << endl;
+        cout << "Iloœc drzwi: " << model[i].ilosc_drzwi << endl;
+        cout << "Iloœc miejsc: " << model[i].ilosc_miejsc << endl;
+        cout << "Pojemnoœc baga¿nika: " << model[i].poj_bagaznika << endl;
         cout << "Klimatyzacja: " << model[i].klimatyzacja << endl;
         cout << "Koszt za godzine: " << model[i].koszt_godzina << endl << endl;
     }
@@ -111,7 +112,8 @@ void Model::Remove(int index) {
         }
     }
     if (IsSamochod) {
-        cout << "Usun samochod o tym modelu przed ta operacja!" << endl;
+        setlocale(LC_ALL, "pl_PL");
+        cout << "Usuñ samochód o tym modelu przed t¹ operacj¹!" << endl;
         system("pause");
     }
     else {
