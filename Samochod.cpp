@@ -53,7 +53,7 @@ void Samochod::CreateObj() {
 void Samochod::RemoveObjModel(int index) {
 
     if (Samochod::IsModel(index)) {
-        cout << "Usuñ samochód o tym modelu przed t¹ operacj¹!" << endl;
+        cout << " Usuñ samochód o tym modelu przed t¹ operacj¹!" << endl;
         system("pause");
     }
     else {
@@ -138,11 +138,11 @@ void Samochod::Remove(int index) {
 
 void Samochod::ReadAll() {
     for (int i = 0; i < samochod.size(); i++) {
-        cout << i + 1 << ") Model: " << samochod[i].SamModel.wersja << endl;
-        cout << "Numer rejestracyjny: " << samochod[i].nr_rejestracyjny << endl;
-        cout << "Kolor: " << samochod[i].kolor << endl;
-        cout << "Przebieg: " << samochod[i].przebieg << endl;
-        cout << "Rocznik: " << samochod[i].rocznik << endl << endl;
+        cout << " " << i + 1 << ") Model: " << samochod[i].SamModel.wersja << endl;
+        cout << " Numer rejestracyjny: " << samochod[i].nr_rejestracyjny << endl;
+        cout << " Kolor: " << samochod[i].kolor << endl;
+        cout << " Przebieg: " << samochod[i].przebieg << endl;
+        cout << " Rocznik: " << samochod[i].rocznik << endl << endl;
     }
 }
 
@@ -161,11 +161,11 @@ void Samochod::AddOC(string r, string m, string d) {
 }
 
 void Samochod::ReadAllOC() {
-    cout << "Numer rejestracyjny oraz termin wa¿noœci OC: " << endl;
+    cout << " Numer rejestracyjny oraz termin wa¿noœci OC: " << endl;
     
     for (int i = 0; i < samochod.size(); i++) {
         
-        cout << "Numer rejestracyjny: " << samochod[i].nr_rejestracyjny <<
+        cout << " Numer rejestracyjny: " << samochod[i].nr_rejestracyjny <<
             ": " << samochod[i].OC.rok << "-" << samochod[i].OC.miesiac <<
             "-" << samochod[i].OC.dzien << ", 00:00" << endl;
     }

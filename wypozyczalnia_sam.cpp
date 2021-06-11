@@ -143,9 +143,8 @@ repeat:
             cin >> p;
 
             if (Pracownik::Find(p) == -1) {
-                cout << "Nie ma takiego pracownika w bazie." << endl;
-                cout << "Spróbuj ponownie!" << endl;
-
+                cout << " Nie ma takiego pracownika w bazie." << endl;
+                cout << " Spróbuj ponownie!" << endl;
                 system("pause");
                 goto repeat;
             }
@@ -162,9 +161,10 @@ repeat:
         {
             system("CLS");
             logo_glowne();
-            cout << "Wybierz rezerwacje do anulowania: " << endl;
+            cout << " Wybierz rezerwacje do anulowania: " << endl << endl;
             int j = 0;
             vector<int> num;
+
             for (int i = 0; i < wypozyczenie.size(); i++) {
                 if (wypozyczenie[i].GetStatus() == 1) {
                     j++;
@@ -173,12 +173,13 @@ repeat:
                     num.push_back(i);
                 }
             }
+
             if (num.size() == 0) {
-                cout << "Brak zarezerwowanych samochodów." << endl;
+                cout << " Brak zarezerwowanych samochodów." << endl;
                 system("pause");
             }
             else {
-                cout << "Twoj wybor: ";
+                cout << " Twoj wybor: ";
                 int choice = GetInput();
 
                 if (choice >= 1 && choice <= num.size()) {
@@ -196,9 +197,10 @@ repeat:
     {
         system("CLS");
         logo_glowne();
-        cout << "Wybierz samochod do wydania: " << endl;
+        cout << " Wybierz samochod do wydania: " << endl << endl;
         int j = 0;
         vector<int> num;
+
         for (int i = 0; i < wypozyczenie.size(); i++) {
             if (wypozyczenie[i].GetStatus() == 1) {
                 j++;
@@ -207,17 +209,18 @@ repeat:
                 num.push_back(i);
             }
         }
+
         if (num.size() == 0) {
-            cout << "Brak zarezerwowanych samochodów." << endl;
-            cout << "Należy zarezerwować samochód." << endl;
+            cout << " Brak zarezerwowanych samochodów." << endl;
+            cout << " Należy zarezerwować samochód." << endl;
             system("pause");
         }
         else {
-            cout << "Twoj wybor: ";
+            cout << " Twoj wybor: ";
             int choice = GetInput();
 
             int przebieg;
-            cout << "Podaj aktualny przebieg samochodu: " << endl;
+            cout << " Podaj aktualny przebieg samochodu: " << endl;
             cin >> przebieg;
 
             if (choice >= 1 && choice <= num.size()) {
@@ -234,9 +237,10 @@ repeat:
     {
         system("CLS");
         logo_glowne();
-        cout << "Wybierz zwracany samochód: " << endl;
+        cout << " Wybierz zwracany samochód: " << endl << endl;
         int j = 0;
         vector<int> num;
+
         for (int i = 0; i < wypozyczenie.size(); i++) {
             if (wypozyczenie[i].GetStatus() == 2) {
                 j++;
@@ -245,16 +249,17 @@ repeat:
                 num.push_back(i);
             }
         }
+
         if (num.size() == 0) {
-            cout << "Brak samochodów do zwrócenia." << endl;
+            cout << " Brak samochodów do zwrócenia." << endl;
             system("pause");
         }
         else {
-            cout << "Twoj wybor: ";
+            cout << " Twoj wybor: ";
             int choice = GetInput();
 
             int przebieg;
-            cout << "Podaj aktualny przebieg samochodu: " << endl;
+            cout << " Podaj aktualny przebieg samochodu: " << endl;
             cin >> przebieg;
 
             if (choice >= 1 && choice <= num.size()) {
@@ -271,7 +276,7 @@ repeat:
     {
         system("CLS");
         logo_glowne();
-        cout << endl << " Opcja - przegladanie samochodów" << endl << endl;
+        cout << endl << " Przegladanie samochodów:" << endl << endl;
         Samochod::ReadAll();
         cout << samochod.size() + 1 << ") Powrot do menu" << endl;
 
@@ -297,6 +302,7 @@ repeat:
     case 7:
         system("CLS");
         logo_glowne();
+        cout << " Przegladanie terminow OC samochodow: " << endl << endl;
         Samochod::ReadAllOC();
         system("pause");
         menu();
@@ -417,7 +423,7 @@ void menu_kierownik() {
                 cout << " Podaj koszt godzinny: ";
                 cin >> koszt_godzina;
 
-                cout << " Czy posiada klimatyzacje? [0/ 1]: ";
+                cout << " Czy posiada klimatyzacje? [0/1]: ";
                 cin >> klimatyzycja;
 
                 Model::Add(marka, wersja, moc_silnika, skrzynia_biegow, paliwo, sr_spalanie,
@@ -475,7 +481,7 @@ void menu_kierownik() {
             break;
         case 4:
         {
-            cout << endl << " Dodanie pracownika do bazy:" << endl;
+            cout << endl << " Dodanie pracownika do bazy:" << endl << endl;
 
             string imie, nazwisko, pesel, nr_tel, stanowisko;
 
@@ -499,7 +505,7 @@ void menu_kierownik() {
         break;
         case 5:
             {
-                cout << "Aktualizacja OC - wybierz samochód:" << endl;
+                cout << " Aktualizacja OC - wybierz samochód:" << endl << endl;
                 Samochod::ReadAll();
 
                 int choice = GetInput();
