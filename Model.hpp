@@ -34,6 +34,9 @@ public:
 
     static void Remove(int);
 
+    //metoda jedynie pod testy. Nie jest u¿ywana w samym programie
+    bool Compare(Model mod);
+
     friend class Samochod;
 };
 

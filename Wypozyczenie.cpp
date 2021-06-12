@@ -95,15 +95,6 @@ int Wypozyczenie::GetNo() {
     return nr_zamowienia;
 }
 
-int Wypozyczenie::Find(int nr_zam) {
-    for (int i = 0; i < wypozyczenie.size(); i++) {
-        if (nr_zam == wypozyczenie[i].nr_zamowienia) {
-            return i;
-        }
-    }
-    return -1;
-}
-
 void Wypozyczenie::Read() {
     setlocale(LC_ALL, "pl_PL");
     cout << " Wypo¿yczenie od: " << wyp_od.rok << "-" << wyp_od.miesiac <<

@@ -143,3 +143,17 @@ void Model::Remove(int index) {
         CreateObj();
     }
 }
+bool Model::Compare(Model mod) {
+    if (marka == mod.marka && wersja == mod.wersja
+        && moc_silnika == mod.moc_silnika && skrzynia_biegow == mod.skrzynia_biegow
+        && paliwo == mod.paliwo && sr_spalanie == mod.sr_spalanie
+        && ilosc_drzwi == mod.ilosc_drzwi && ilosc_miejsc == mod.ilosc_miejsc
+        && poj_bagaznika == mod.poj_bagaznika && klimatyzacja == mod.klimatyzacja
+        && koszt_godzina == mod.koszt_godzina) {
+
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}

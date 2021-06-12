@@ -40,14 +40,11 @@ public:
 
     int GetNo();
     int GetStatus();
-    static int Find(int);
     void Read();
 
     static void Cancel(int);
     static void Release(int, int);
     static void Reception(int, int);
-
-
 
     //Próba zrobienia kontroli dat rezerwacji samochodów
     //static bool CheckDate(Date, Date);
